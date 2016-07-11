@@ -1,2 +1,2 @@
 # bigsnarfdude.github.io
-personal website on github
+personal website on https://bigsnarfdude.github.io
