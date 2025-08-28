@@ -3490,10 +3490,27 @@
 		@media screen and (max-width: 736px) {
 
 			#sidebar + #wrapper {
-				padding-top: 0;
+				padding-top: 3.5em;
+			}
+
+			#sidebar {
+				display: block !important;
 			}
 
 		}
+
+/* Accessibility - Focus States */
+
+	a:focus, button:focus {
+		outline: 2px solid #ffffff;
+		outline-offset: 2px;
+	}
+
+	#sidebar nav a:focus {
+		outline: 2px solid #ffffff;
+		outline-offset: 2px;
+		background: rgba(255, 255, 255, 0.1);
+	}
 
 	#header + #wrapper > .wrapper > .inner {
 		margin: 0 auto;
