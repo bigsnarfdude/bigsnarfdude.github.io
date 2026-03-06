@@ -7,8 +7,6 @@ author_profile: true
 
 # Vincent Ohprecio
 
-4481 Yukon Street, Vancouver, BC | 604-813-3327 | ohprecio@gmail.com
-
 **Safety Specialist | Builder | Investigator**
 
 Former RCMP Police Officer turned Engineer. Experience building detection systems and investigating complex misuse patterns across systems, networks and products. Expert in designing ML powered monitoring pipelines, automating investigative workflows, and translating emerging threats into scalable technical mitigations. Proven track record responding to critical incidents and collaborating with policy, product, and engineering teams.
