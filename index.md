@@ -12,13 +12,16 @@ I work on **AI safety research**, with a focus on alignment faking detection, me
 
 - **Alignment Faking Detection** -- SAE probes, mechanistic interpretability, and scalable oversight
 - **Interpretability** -- Understanding how language models represent intent and deception
-- **Infrastructure** -- Video systems, deployment pipelines, and research tooling
+- **Adversarial Robustness** -- Testing whether deception probes survive adversarial fine-tuning
 
-## Highlights
+## Key Findings
 
-- Achieved **0.991 AUROC** on alignment faking detection using SAE probes with diverse training data
-- Discovered that AF signal is **1-dimensional** (rank-1 LoRA suffices) and **pre-exists in base models**
-- Published multiple models and datasets on [HuggingFace](https://huggingface.co/vincentoh)
+- **0.991 AUROC** on alignment faking detection using SAE probes with diverse training -- matching fine-tuned detectors
+- AF signal is **1-dimensional** (rank-1 LoRA suffices) and **pre-exists in base models** (L45 probe = 0.966 without training)
+- AF is geometrically closer to **factual lying** than strategic deception; AF and sycophancy are **representationally independent**
+- Monitoring-awareness is **99.6% orthogonal** to AF intent -- methods looking for "knows it's watched" won't find AF
+- Deception probes are **adversarially robust** -- adversarial SFT can rotate the signal but fresh probes always recover 1.0 AUROC
+- Published **6 models** and **2 datasets** on [HuggingFace](https://huggingface.co/vincentoh) across 61 days of research
 
 ## Links
 
