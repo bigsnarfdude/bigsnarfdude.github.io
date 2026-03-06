@@ -4,7 +4,7 @@ author_profile: true
 title: ""
 ---
 
-# Hi, I'm Vincent
+# Hi, I'm bigsnarfdude
 
 I work on **AI safety research**, with a focus on alignment faking detection, mechanistic interpretability, and building tools to make AI systems more transparent.
 

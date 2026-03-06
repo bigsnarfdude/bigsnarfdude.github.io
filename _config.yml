@@ -5,8 +5,8 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 locale                   : "en-US"
 title                    : "bigsnarfdude"
 title_separator          : "-"
-name                     : "Vincent Oh"
-description              : "Vincent Oh's personal website. AI safety research, alignment faking detection, and software engineering."
+name                     : "bigsnarfdude"
+description              : "AI safety research, alignment faking detection, and software engineering."
 url                      : https://bigsnarfdude.github.io
 repository               : "bigsnarfdude/bigsnarfdude.github.io"
 words_per_minute         : 200
@@ -23,7 +23,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "Vincent Oh"
+  name             : "bigsnarfdude"
   avatar           : "/assets/images/avatar.jpg"
   bio              : "AI Safety Researcher"
   location         : "Canada"

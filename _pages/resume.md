@@ -5,7 +5,7 @@ layout: single
 author_profile: true
 ---
 
-# Vincent Ohprecio
+# Resume
 
 **Safety Specialist | Builder | Investigator**
 
