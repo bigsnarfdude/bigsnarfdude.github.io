@@ -24,7 +24,7 @@ analytics:
 # Site Author
 author:
   name             : "Vincent Oh"
-  avatar           : "/assets/images/avatar.png"
+  avatar           : "/assets/images/avatar.jpg"
   bio              : "AI Safety Researcher"
   location         : "Canada"
   links:
