@@ -87,10 +87,21 @@ G=4       0.660  — group normalization works
 G=8+KL    0.705  — ref on CPU unlocks memory
 +steps    0.715  — more training helps
 iter rd1  0.725  — training from best checkpoint
-iter rd2  0.760  — new best
+iter rd2  0.760  — training ceiling
+MAJ-8     0.820  — majority voting, zero training
 ```
 
-**EXP-008: 0.760.** Current best. 14pp above baseline.
+**EXP-008: 0.760.** Training ceiling. 14pp above baseline.
+
+**Then agent1 changed axes entirely.**
+
+After several attempts to push past 0.760 through more training all stalled — SGD variants, longer runs, KL tuning — agent1 stopped and asked a different question: *what if we just sample more at inference time?*
+
+**MAJ-8: 0.820.** Run the best checkpoint 8 times at temperature 0.7, take the majority answer. No training. Zero GPU minutes. 0pp above 0.760 from any further GRPO iteration — but 6pp above it from a single inference trick.
+
+MAJ-16 at 0.760 showed the ceiling: too many samples at higher temperature, noise wins. The sweet spot is @8, temp=0.7.
+
+Target was 0.830. We're at 0.820. The gap is now 1pp.
 
 ---
 
@@ -115,7 +126,8 @@ The ambiguity above is the *oracle problem*: for any domain where the answer exi
 **rrma-lean** is the cleaner version. Lean 4 proofs are either formally verified or they're not. The proof checker is the oracle — not the model's weights, not a human's judgment. If agents can find a proof for a theorem they've never seen, that's unambiguous. If they can't, that's unambiguous too.
 
 Next steps:
-- Gen 2: continue iterating from 0.760, targeting 0.83
+- MAJ-8 temperature sweep — 0.820 → 0.830 may be one sweep away
+- Combined: train from 0.760 baseline + majority voting on top
 - rrma-lean: start with a known proof, strip it, see if agents rediscover the tactic path
 - The verification layer: TrustLoop audit of the full reasoning chain
 
