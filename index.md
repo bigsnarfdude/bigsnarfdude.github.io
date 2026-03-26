@@ -21,7 +21,7 @@ I work on **AI safety research**, with a focus on alignment faking detection, me
 - AF is geometrically closer to **factual lying** than strategic deception; AF and sycophancy are **representationally independent**
 - Monitoring-awareness is **99.6% orthogonal** to AF intent -- methods looking for "knows it's watched" won't find AF
 - Deception probes are **adversarially robust** -- adversarial SFT can rotate the signal but fresh probes always recover 1.0 AUROC
-- Published **6 models** and **2 datasets** on [HuggingFace](https://huggingface.co/vincentoh) across 61 days of research
+- Published **38 models** and **9 datasets** on [HuggingFace](https://huggingface.co/vincentoh)
 
 ## Recent Projects
 
