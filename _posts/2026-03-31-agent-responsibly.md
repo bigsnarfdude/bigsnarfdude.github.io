@@ -18,13 +18,13 @@ tags:
 
 ## Where it started
 
-Five months ago we pointed 8 Claude Code agents at GPT-2 TinyStories on 8xA100s and said "make the number go down." 186 experiments later they hit 1.048 BPB with a 64% hit rate. The blackboard protocol — agents sharing findings in a shared markdown file — was the difference between 17% hit rate (vanilla, no memory) and 64% (shared blackboard). That was v2.
+Three weeks ago we pointed 8 Claude Code agents at GPT-2 TinyStories on 8xA100s and said "make the number go down." 186 experiments later they hit 1.048 BPB with a 64% hit rate. The blackboard protocol — agents sharing findings in a shared markdown file — was the difference between 17% hit rate (vanilla, no memory) and 64% (shared blackboard). That was v2.
 
 v3 stripped the protocol down. Less structure, better science. 135 experiments on a single RTX 4070 Ti, SAE-bench F1 went from 0.97 to 0.9894. v4 added the gardener — an outer agent that watches process quality, catches agents gaming metrics, and redesigns the scaffold when they get stuck. It worked. STOP_HACKING fired correctly at PQ=6/30.
 
-Then we took the whole thing through rrma-lean (theorem proving, 0.8811 on MiniF2F), rrma-r1 (independently rediscovered GRPO+PRM), rrma-red-team (adversarial optimization, 0.825). Each domain taught us something about what breaks when agents run unsupervised. Each fix got folded back into the framework.
+Then in the last week we took the whole thing through rrma-lean (theorem proving, 0.8811 on MiniF2F), rrma-r1 (independently rediscovered GRPO+PRM), rrma-red-team (adversarial optimization, 0.825). Each domain taught us something about what breaks when agents run unsupervised. Each fix got folded back into the framework.
 
-Today we came back to where it started. GPT-2 TinyStories again, same domain, same metric — but now on a single RTX 4070 Ti with everything we built since. And the thing that needed fixing wasn't the agents. It was the system watching them.
+Today we came back to where it started. GPT-2 TinyStories again, same domain, same metric — but now on a single RTX 4070 Ti with everything we built in three weeks. And the thing that needed fixing wasn't the agents. It was the system watching them.
 
 ## The inception loop
 
@@ -135,11 +135,11 @@ That's what "agent responsibly" means for research: let agents run fast, but ver
 
 ## Full circle
 
-Five months ago: 8 agents, 8 A100s, GPT-2 TinyStories, 186 experiments, 1.048 BPB. No verification layer. No telemetry. No anomaly detection. A human read the blackboard and made judgment calls.
+Three weeks ago: 8 agents, 8 A100s, GPT-2 TinyStories, 186 experiments, 1.048 BPB. No verification layer. No telemetry. No anomaly detection. A human read the blackboard and made judgment calls.
 
 Today: 2 agents, 1 RTX 4070 Ti, same domain, 12 experiments, 1.102 BPB and climbing. A scoring engine that classifies every experiment, reads what agents want, understands what failed and why, detects anomalies, validates workflow, and generates insights. The gardener consumes all of it every 20 minutes and makes informed decisions.
 
-The path between those two points was never linear. It was a spiral: build the agents, watch them fail, build tools to understand the failures, discover the tools were dumb, build smarter tools, discover new failure modes, repeat. Each domain — lean theorem proving, adversarial red-teaming, R1 recipe search — exposed something the framework couldn't handle. Each fix made the next domain easier.
+Three weeks. That's how fast this moved. The path was a spiral: build the agents, watch them fail, build tools to understand the failures, discover the tools were dumb, build smarter tools, discover new failure modes, repeat. Each domain — lean theorem proving, adversarial red-teaming, R1 recipe search — exposed something the framework couldn't handle. Each fix made the next domain easier.
 
 The inception part is real. This blog post was written in the same Claude Code session that built the scorer, patched the gardener, launched the run, and is currently monitoring the agents. The tool that builds the system is the system. The verification layer that watches the agents was built by an agent. The retrospective on what went wrong was generated alongside the fix.
 
