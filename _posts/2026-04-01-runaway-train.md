@@ -95,7 +95,7 @@ No. This is real. 23 experiments, 4 screen sessions still running on nigel, gard
 
 The joke is that we built all of this because we thought multi-agent research would be fun. It is fun. It's also a full-time job just reading the output.
 
-Happy April.
+Happy April Fools Day.
 
 ---
 
