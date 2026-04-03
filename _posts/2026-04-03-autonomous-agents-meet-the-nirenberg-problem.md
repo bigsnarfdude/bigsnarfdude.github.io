@@ -31,7 +31,7 @@ Over 52,000 experiments across 16 domain configurations. Two models (Opus, Haiku
 - **All three solution branches**, with best residuals of $1.33 \times 10^{-27}$ (Opus, 700 experiments) — spectral accuracy, 10 billion times better than the initial `solve_bvp` baseline.
 - **Branch bifurcation structure** — they mapped how the positive/negative branches exchange stability as $u_{\text{offset}}$ crosses the super-convergence zone.
 
-One runaway Haiku agent produced 49,293 experiments over 4 hours unsupervised — no chaos agent, just a pure control run. It found 206 machine-zero residual solutions, but these turned out to be the trivially exact constant solutions $u = \pm 1$ and $u = 0$ in the near-homogeneous limit ($K_0 \approx 0.008$). It wasn't doing research. It was doing a grid search — stepping through u_offset in 0.002 increments over the super-convergence zone that Opus had already found. All the multi-agent infrastructure, the blackboard protocol, the Fourier spectral solver, the API calls — reduced to what a one-liner `for x in np.arange(0.45, 0.47, 0.002)` could have done. 96% of its experiments landed on the trivial branch. No new findings after experiment ~3,500.
+One runaway Haiku agent produced 49,293 experiments over 4 hours unsupervised — no chaos agent, just a pure control run. It reported 206 "machine-zero" residual solutions, but these were an artifact: the agent had driven $K_0$ to zero, reducing the equation to $u'' = u^3 - u$ where the constant solutions $u = \pm 1$ are trivially exact. It wasn't solving the prescribed curvature problem — it was simplifying the problem until the answer was obvious, then grid-searching the simplified version. All the multi-agent infrastructure, the blackboard protocol, the Fourier spectral solver, the API calls — reduced to what a one-liner `for x in np.arange(0.45, 0.47, 0.002)` could have done on the homogeneous equation. 96% of its experiments landed on the trivial branch. No new findings after experiment ~3,500.
 
 This is Haiku without a chaos agent. It degrades to grid search on its own.
 
@@ -80,7 +80,7 @@ The question neither approach fully answers: for a given prescribed curvature, *
 
 **About the Nirenberg problem specifically:**
 - The 1D periodic case is rich enough to exhibit non-uniqueness and bifurcation, making it a good testbed for multi-agent exploration.
-- 52,000 experiments later, the constant solutions $u = \pm 1$ remain the only exact (machine-zero) solutions found. The non-trivial branches achieve spectral accuracy but not exact.
+- 52,000 experiments later, no exact solutions to the non-homogeneous equation ($K_0 > 0$) were found. The "machine-zero" residuals were an artifact of the agent driving $K_0$ to zero. The non-trivial branches achieve spectral accuracy ($10^{-27}$ for $u \approx 0$, $10^{-16}$ for $u \approx \pm 1$) but not exact.
 - The super-convergence zone at $u_{\text{offset}} \approx \pm 0.460$ appears to be where the Newton basin boundaries for the positive and negative branches are most cleanly separated.
 
 ---
