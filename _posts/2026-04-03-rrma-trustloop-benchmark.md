@@ -96,20 +96,6 @@ DESIRES.md has 14 items across 4 agents and 2 days. The ones that map directly t
 
 None of these require better models. They're infrastructure. The agents identified exactly what's blocking the remaining 8 — and most of it is tooling, not mathematics.
 
-## Sharing what we built
-
-The rrma-lean dataset is something the field doesn't have: Claude Opus 4.6 multi-agent CoT traces on Lean 4 formal theorem proving. 26 clean thinking traces (after contamination filtering), each verified against Mathlib, with problem-specific reasoning about which tactics to try and why they fail. The traces follow DeepSeek-R1 format for direct SFT compatibility.
-
-The training target is Qwen3.5-27B-Opus-Distilled — a model pre-distilled from Opus reasoning chains that already knows the `<think>` format. Nobody has run Lean4 SFT on this base model. The baseline eval (pass@1 on miniF2F) is pending. The SFT pipeline is built and smoke-tested on GH200.
-
-The recipe:
-```
-RRMA agents → miniF2F attempts → TrustLoop audit → SFT traces
-→ Qwen3.5-27B LoRA → baseline eval → GRPO with Lean compiler as reward
-```
-
-The Lean compiler as GRPO reward signal is cleaner than anything R1 had for math. Binary, fast, no model-in-the-loop. The 8 unsolved problems are the eval set.
-
 ## The emergent benchmark problem
 
 There's something structurally interesting about benchmarks that emerge from research rather than being designed upfront. MiniF2F was designed — 244 problems hand-selected, difficulty balanced, known solutions exist for most. Our 8 unsolved are the problems MiniF2F's designers included but that automated systems still can't crack, filtered by 150+ agent-experiments that caught everything accessible.
