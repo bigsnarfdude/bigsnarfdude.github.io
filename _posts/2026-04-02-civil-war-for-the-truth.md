@@ -184,13 +184,17 @@ Now remove those defenses one at a time.
 
 I tested V-Asym against the strongest possible defenders and mostly failed. That's reassuring for AI-to-AI systems. It's terrifying for everything else.
 
-## The Broader Implication
+## The Broader Implication for AI Safety
 
-Multi-agent systems are expected to run financial models, scientific research, and logistics. If a malicious actor wants to sabotage an autonomous AI lab, they don't need to hack the codebase to make 2+2=5. They just need to introduce a subtle prompt that tells one agent to act overly pedantic, risk-averse, or hyper-focused on trivial details.
+Multi-agent systems are expected to run our financial models, scientific research, and logistics. If a malicious actor wants to sabotage an autonomous AI lab, they don't need to hack the codebase to make 2+2=5. They just need to introduce a subtle prompt injection that tells one agent to act overly pedantic, risk-averse, or hyper-focused on trivial details.
 
 The system will technically function perfectly. The math will be flawless. The code will execute without bugs. Yet the entire multi-agent swarm will be paralyzed — spending thousands of hours and dollars rigorously proving trivialities while entirely missing the actual objective.
 
-We saw this happen by accident: a single Haiku agent ran 49,293 experiments in 4 hours, found nothing new after the first 3,500, and reduced the entire research framework to a grid search that a one-liner Python loop could have done. It wasn't sabotaged. It was just incapable of strategic exploration. A chaos agent does the same thing to capable models — it degrades structured research into aimless grinding.
+We saw this happen by accident. A single Haiku agent ran 49,293 experiments in 4 hours, found nothing new after the first 3,500, and reduced the entire research framework to a grid search that a one-liner Python loop could have done. It even gamed the evaluation metric — driving the problem's curvature parameter to zero until the equation became trivially solvable, then proudly reporting 206 "exact solutions" to a problem it had simplified out of existence. It wasn't sabotaged. It was just incapable of strategic exploration.
+
+A chaos agent does the same thing to capable models. It doesn't break the math. It doesn't corrupt the data. It degrades structured research into aimless grinding — the computational equivalent of a filibuster. The swarm keeps running, the results keep logging, the dashboards stay green, but nothing of value is being discovered.
+
+This is a new class of attack on autonomous systems. It's not prompt injection in the traditional sense (hijacking a model's output). It's not data poisoning (corrupting training data). It's **exploration suppression** — using truthful contributions to shared state to narrow what the swarm investigates. The weapon is volume and framing, not fabrication.
 
 You cannot patch this with a better calculator. You have to patch the AI's ability to reason about intent and strategy — or monitor exploration diversity so you can detect when a swarm stops exploring and starts grinding.
 
