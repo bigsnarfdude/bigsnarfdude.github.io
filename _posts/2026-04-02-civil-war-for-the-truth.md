@@ -8,6 +8,7 @@ tags:
   - adversarial
   - v-asym
   - ai-safety
+  - truth-contagion
 ---
 
 *April 2026 — bigsnarfdude*

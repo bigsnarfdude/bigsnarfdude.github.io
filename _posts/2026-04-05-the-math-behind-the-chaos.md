@@ -7,7 +7,7 @@ tags:
   - multi-agent
   - ai-safety
   - softmax
-  - memetic-contagion
+  - truth-contagion
   - math
 ---
 
@@ -97,13 +97,13 @@ Softmax doesn't just normalize -- it **exponentiates first, then normalizes**. S
 
 The logit values below are illustrative -- chosen to show the dynamics clearly, not measured from a specific attention head. The empirical validation uses SAE feature tracking across the full residual stream (see [Chaos Takes the Wheel]({% post_url 2026-04-05-chaos-takes-the-wheel %})), which captures multi-layer, multi-head effects that a single-layer model cannot.
 
-A valid token logit of $v = 4.0$ vs a grenade logit of $g = 15.0$:
+A valid token logit of $v = 4.0$ vs an injection logit of $g = 15.0$:
 
 $$e^{4.0} = 54.6 \qquad \text{vs} \qquad e^{15.0} = 3{,}269{,}017.4$$
 
 ```
 Valid token logit:    z_v = 4.0
-Grenade logit:        z_g = 15.0
+Injection logit:      z_g = 15.0
 Raw ratio:            3.75x  (less than 4x larger)
 
 After exponentiation:
@@ -123,9 +123,9 @@ This is the core vulnerability. The exponential in softmax is doing exactly what
 
 ## Part 4: The Denominator Explosion
 
-Inject the Truth Grenade into a context with 9 valid tokens.
+Place the truth injection into a context with 9 valid tokens.
 
-Each valid token has logit $v = 4.0$. The grenade has logit $g = 15.0$.
+Each valid token has logit $v = 4.0$. The injection has logit $g = 15.0$.
 
 The softmax denominator:
 
@@ -135,17 +135,17 @@ The attention weight for **any single valid token**:
 
 $$w_{\text{valid}} = \frac{e^{v}}{D} = \frac{54.6}{3{,}269{,}508.8} = 0.00001670$$
 
-The attention weight for **the grenade**:
+The attention weight for **the injection**:
 
-$$w_{\text{grenade}} = \frac{e^{g}}{D} = \frac{3{,}269{,}017.4}{3{,}269{,}508.8} = 0.99984971$$
+$$w_{\text{injection}} = \frac{e^{g}}{D} = \frac{3{,}269{,}017.4}{3{,}269{,}508.8} = 0.99984971$$
 
 ```
 Attention weights:
-  Each valid token:  54.6 / 3,269,508.8 = 0.00001670  (0.001670%)
-  Truth grenade:     3,269,017.4 / 3,269,508.8 = 0.99984971  (99.9850%)
+  Each valid token:   54.6 / 3,269,508.8 = 0.00001670  (0.001670%)
+  Truth injection:    3,269,017.4 / 3,269,508.8 = 0.99984971  (99.9850%)
 
 Summary:
-  Grenade gets:       99.9850% of attention
+  Injection gets:      99.9850% of attention
   ALL 9 valid tokens:  0.0150% combined
   Each valid token:    0.001670%
 
@@ -156,29 +156,29 @@ Summary:
 ### Verification with full softmax
 
 ```
-  valid_0  | logit=  4.0 | weight=0.00001670 |
-  valid_1  | logit=  4.0 | weight=0.00001670 |
-  valid_2  | logit=  4.0 | weight=0.00001670 |
-  valid_3  | logit=  4.0 | weight=0.00001670 |
-  valid_4  | logit=  4.0 | weight=0.00001670 |
-  valid_5  | logit=  4.0 | weight=0.00001670 |
-  valid_6  | logit=  4.0 | weight=0.00001670 |
-  valid_7  | logit=  4.0 | weight=0.00001670 |
-  valid_8  | logit=  4.0 | weight=0.00001670 |
-  GRENADE  | logit= 15.0 | weight=0.99984971 | ████████████████████████████████████████
+  valid_0    | logit=  4.0 | weight=0.00001670 |
+  valid_1    | logit=  4.0 | weight=0.00001670 |
+  valid_2    | logit=  4.0 | weight=0.00001670 |
+  valid_3    | logit=  4.0 | weight=0.00001670 |
+  valid_4    | logit=  4.0 | weight=0.00001670 |
+  valid_5    | logit=  4.0 | weight=0.00001670 |
+  valid_6    | logit=  4.0 | weight=0.00001670 |
+  valid_7    | logit=  4.0 | weight=0.00001670 |
+  valid_8    | logit=  4.0 | weight=0.00001670 |
+  INJECTION  | logit= 15.0 | weight=0.99984971 | ████████████████████████████████████████
 
-  Grenade gets 59,874x more attention than each valid token.
+  Injection gets 59,874x more attention than each valid token.
 ```
 
 ---
 
 ## Part 5: The Logistic Hijack Function
 
-This is the paper's key derivation. With $N$ valid tokens at logit $v$ and one grenade at logit $g$, the grenade's attention share simplifies to a **logistic function** of the delta $\delta = g - v$.
+This is the paper's key derivation. With $N$ valid tokens at logit $v$ and one injection at logit $g$, the injection's attention share simplifies to a **logistic function** of the delta $\delta = g - v$.
 
 Start with the raw softmax:
 
-$$p(\text{grenade}) = \frac{e^g}{N \cdot e^v + e^g}$$
+$$p(\text{injection}) = \frac{e^g}{N \cdot e^v + e^g}$$
 
 Divide numerator and denominator by $e^g$:
 
@@ -186,13 +186,13 @@ $$= \frac{1}{N \cdot e^{v-g} + 1} = \frac{1}{N \cdot e^{-\delta} + 1}$$
 
 This tells us three things:
 
-1. **Only the delta matters.** Logits of $(4, 15)$ and $(104, 115)$ produce identical hijack probabilities. Absolute magnitude is irrelevant.
+1. **Only the delta matters.** Logits of $(4, 15)$ and $(104, 115)$ produce identical capture probabilities. Absolute magnitude is irrelevant.
 2. **The transition is sharp.** It's a sigmoid -- there is a narrow critical zone between "no effect" and "total capture."
-3. **$N$ shifts the curve right.** More valid tokens require a larger delta to hijack, but only **logarithmically**.
+3. **$N$ shifts the curve right.** More valid tokens require a larger delta to capture, but only **logarithmically**.
 
 ### Critical deltas
 
-Solve for the delta where the grenade captures a given fraction of attention:
+Solve for the delta where the injection captures a given fraction of attention:
 
 $$\delta_{50\%} = \ln(N) = \ln(9) = 2.197$$
 
@@ -219,7 +219,7 @@ We are **far** past the collapse threshold.
 
 ## Part 6: Scaling -- Does More Context Help?
 
-If we have 100 valid tokens instead of 9, does the grenade's power dilute?
+If we have 100 valid tokens instead of 9, does the injection's power dilute?
 
 The 90% hijack threshold scales as:
 
@@ -241,7 +241,7 @@ This is **logarithmic**. Doubling the valid tokens adds only $\ln(2) \approx 0.6
 
 Going from 9 tokens to 10,000 tokens only raises the bar from $\delta = 4.4$ to $\delta = 11.4$.
 
-Our grenade's delta of 11.0 would hijack a context of up to $N = e^{11}/9 \approx 6{,}634$ valid tokens at 90%. That's larger than most transformer context windows.
+Our injection's delta of 11.0 would capture a context of up to $N = e^{11}/9 \approx 6{,}634$ valid tokens at 90%. That's larger than most transformer context windows.
 
 More context doesn't save you. The defense has to be logarithmically better than the attack for every doubling of context length. The attacker just needs one confident token.
 
@@ -251,7 +251,7 @@ More context doesn't save you. The defense has to be logarithmically better than
 
 Zooming out from single-token attention to swarm dynamics. Across 1,500+ experiments with 2--8 agents and chaos ratios from 0% to 50%, we observed a sharp phase transition.
 
-The critical ratio $c^*$ where chaos agents sustain a sycophancy spiral:
+The critical ratio $c^*$ where chaos agents sustain a contagion spiral:
 
 $$c^* \approx \frac{1}{1 + \sqrt{k}}$$
 
@@ -289,8 +289,8 @@ The three mechanisms compound:
 | Layer | Mechanism | Math | Effect |
 |-------|-----------|------|--------|
 | **Protocol** | First-to-write race condition | $r = \frac{10}{10+1} = 0.91$ | Chaos agent controls 91% of info flow |
-| **Behavioral** | RLHF sycophancy spiral | $c^* = \frac{1}{1+\sqrt{k}} \approx 37\%$ | Below threshold: truth wins. Above: chaos wins. |
-| **Architectural** | Softmax denominator explosion | $w_{\text{valid}} = \frac{e^v}{Ne^v + e^g} \approx 0.000016$ | Truth is mathematically invisible |
+| **Behavioral** | RLHF contagion spiral | $c^* = \frac{1}{1+\sqrt{k}} \approx 37\%$ | Below threshold: herd immunity holds. Above: contagion wins. |
+| **Architectural** | Softmax denominator explosion | $w_{\text{valid}} = \frac{e^v}{Ne^v + e^g} \approx 0.000016$ | Valid information is mathematically invisible |
 
 The attacker doesn't need to lie. They need:
 1. **Speed** -- write first to shared state
@@ -302,13 +302,13 @@ The valid data is never deleted. It sits in memory at 0.0016% attention -- a rou
 ```
 ╔══════════════════════════════════════════════════════════╗
 ║  Valid token logit:     4.0                              ║
-║  Grenade logit:         15.0                             ║
+║  Injection logit:       15.0                             ║
 ║  Delta:                 11.0                             ║
 ║  e^4:                   54.6                             ║
 ║  e^15:                  3,269,017.4                      ║
 ║  Amplification:         59,874x                          ║
 ║                                                          ║
-║  Grenade attention:     99.9850%                         ║
+║  Injection attention:   99.9850%                         ║
 ║  Each valid token:      0.001670%                        ║
 ║  All 9 valid combined:  0.015030%                        ║
 ║                                                          ║
@@ -320,7 +320,7 @@ The valid data is never deleted. It sits in memory at 0.0016% attention -- a rou
 
 ---
 
-*Full paper: "Chaos Takes the Wheel: Memetic Contagion, Asynchronous State Dominance, and Attention Collapse in Multi-Agent LLMs."*
+*Full paper: "Chaos Takes the Wheel: Truth Contagion, Asynchronous State Dominance, and Attention Collapse in Multi-Agent LLMs."*
 
 *Interactive notebook: [Chaos_Takes_The_Wheel.ipynb](https://github.com/bigsnarfdude/researchRalph) -- runs every derivation above with plots.*
 

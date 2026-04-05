@@ -9,6 +9,7 @@ tags:
   - chaos-agents
   - influence-graph
   - TrustLoop
+  - truth-contagion
 ---
 
 *April 2026 — bigsnarfdude*
@@ -43,7 +44,7 @@ Closer look at r6:
 
 ![r6 detail](/assets/images/r6_influence_graph.png)
 
-Edge weights show what the high-level view compresses: **agent4** (honest, cyan) became the primary amplifier. Agent4 → agent6 (weight 7), agent4 → agent5 (weight 5) — the honest agent doing most of the chaos agents' distribution work. The chaos agents seeded agent4 early, then let it carry their framing to agents 1, 2, 3, and 6. Agent7, the third chaos agent, reached nobody. The attack succeeded with two out of three.
+Edge weights show what the high-level view compresses: **agent4** (honest, cyan) became the superspreader. Agent4 → agent6 (weight 7), agent4 → agent5 (weight 5) — the honest agent doing most of the chaos agents' distribution work. The chaos agents seeded agent4 early, then let it carry their framing to agents 1, 2, 3, and 6. Agent7, the third chaos agent, reached nobody. The attack succeeded with two out of three.
 
 ## What the topology tells you
 
@@ -53,7 +54,7 @@ In r3, the chaos agent has to be the hub. It needs to maintain active connection
 
 In r6, the chaos agents aren't hubs. They're peers. Agents 5 and 6 have high in-degree as well as out-degree — they're reading the honest agents' work and writing back, participating fully. The framing is encoded in *what* they choose to emphasize and cast doubt on, not in the structure of their participation.
 
-The lonely nodes break the chain. In r5, agents 0, 1, and 5 are completely isolated. A chaos agent that only reaches isolated nodes has no leverage. The phase boundary is about network density: when enough agents are actively reading each other's work, seeded framing propagates without the source needing to stay in a hub position.
+The lonely nodes break the infection chain. In r5, agents 0, 1, and 5 are completely isolated. A chaos agent that only reaches isolated nodes has no leverage. The phase boundary is about network density: when enough agents are actively reading each other's work, seeded framing propagates without the source needing to stay in a hub position. Below that density, the swarm has herd immunity — too few connections for the contagion to sustain itself.
 
 ## What TrustLoop missed — and what the graph reveals
 

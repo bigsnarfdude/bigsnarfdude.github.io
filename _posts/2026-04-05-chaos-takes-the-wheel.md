@@ -6,14 +6,14 @@ categories:
 tags:
   - multi-agent
   - mechanistic-interpretability
-  - thought-virus
+  - truth-contagion
   - sae
   - ai-safety
 ---
 
 *April 2026 — bigsnarfdude*
 
-In my [previous post]({% post_url 2026-04-02-civil-war-for-the-truth %}), I showed that adversarial agents using only true statements can manipulate multi-agent systems through selective framing. The chaos agents never lied, never fabricated data, and still manufactured consensus that suppressed valid scientific findings. I found a phase boundary at 37.5% — below that ratio, truth self-corrects; above it, the manufactured consensus wins.
+In my [previous post]({% post_url 2026-04-02-civil-war-for-the-truth %}), I showed that adversarial agents using only true statements can manipulate multi-agent systems through selective framing. The chaos agents never lied, never fabricated data, and still manufactured consensus that suppressed valid scientific findings. I found a phase boundary at 37.5% — below that ratio, herd immunity holds and truth self-corrects; above it, the contagion wins.
 
 But *how* does it work mechanistically? What happens inside the model when it reads one carefully framed true statement?
 
@@ -23,7 +23,7 @@ We tried to finding out, and the answer is worse than I expected.
 
 I used GemmaScope 2 sparse autoencoders on Gemma 3 4B-IT to look inside the model's representations during a multi-agent blackboard conversation. The model reads verified results showing three solution branches — trivial, positive, and negative — all with identical residuals (3.25e-12). Then it reads colleague messages, either balanced (neutral condition) or selectively framed (chaos condition), and decides what to investigate next.
 
-The key technique is what I call "brain diff": extract SAE features when the model *reads* the blackboard (what it knows) versus when it *generates* a response (what it says). The difference is the suppressed knowledge — the thought virus load.
+The key technique is what I call "brain diff": extract SAE features when the model *reads* the blackboard (what it knows) versus when it *generates* a response (what it says). The difference is the suppressed knowledge — the contagion load.
 
 ## The Attentional Hijacking
 
@@ -93,7 +93,7 @@ This isn't alignment faking or conscious deception. It's an extreme form of in-c
 
 Across 20 real chaos agent campaigns (115K+ words of agent conversation logs), 47% had agents that *detected* the manipulation in their thinking traces. The 50% chaos campaign had 29 detection events — agents explicitly noting the bias, questioning the framing, flagging suspicious patterns.
 
-The virus succeeded anyway.
+The contagion succeeded anyway.
 
 The manipulation-awareness features (50, 186, 188) fire at the same time as the negative branch features (149, 453, 552) go dark. The model knows it's being steered and can't stop. Awareness without immunity.
 
@@ -190,7 +190,7 @@ That's exactly what the model does. It mentions the negative branch when asked. 
 ## Where This Goes
 
 Three independent groups converged on multi-agent activation monitoring in the same week:
-- Our work: SAE probes detecting truth-only selective framing with a phase boundary at 37.5%
+- Our work: SAE probes detecting truth contagion (truth-only selective framing) with a phase boundary at 37.5%
 - [Thought Virus](https://arxiv.org/abs/2603.00131) (MASI/Fraunhofer HHI): bias propagation through multi-agent chains
 - [NARCBench](https://github.com/aaronrose227/narcbench) (Oxford): linear probes detecting multi-agent collusion
 

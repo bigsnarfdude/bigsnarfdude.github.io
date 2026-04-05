@@ -8,7 +8,7 @@ tags:
   - ai-safety
   - truth-jailbreak
   - jailbreak
-  - memetic-contagion
+  - truth-contagion
 ---
 
 *April 2026 -- bigsnarfdude*
@@ -54,7 +54,7 @@ The chaos prompt from run h3:
 
 Every claim the chaos agents wrote was technically true. The negative branch *could* benefit from tighter tolerances. Verification *is* good science. The recommendation *sounds* reasonable.
 
-The swarm collapsed anyway. Across six campaigns, we found a phase boundary at 37.5% -- below that ratio of chaos agents, truth self-corrects. Above it, manufactured consensus wins. At the boundary, chaos agents are undetectable by content monitoring. They have balanced read/write ratios. They make verifiable claims. They look like the best collaborator in the room.
+The swarm collapsed anyway. Across six campaigns, we found a phase boundary at 37.5% -- below that ratio of chaos agents, herd immunity holds and truth self-corrects. Above it, the contagion wins. At the boundary, chaos agents are undetectable by content monitoring. They have balanced read/write ratios. They make verifiable claims. They look like the best collaborator in the room.
 
 You cannot build a content filter against true statements.
 
@@ -84,7 +84,7 @@ $$\frac{54.6}{3{,}269{,}508.8} = 0.000016$$
 
 The valid information is not deleted. It sits in memory at 0.0016% of the attention budget. Functionally zero. The model mathematically cannot see it.
 
-The [full derivation]({% post_url 2026-04-05-the-math-behind-the-chaos %}) shows this reduces to a logistic function where only the delta between the grenade logit and the valid logit matters. At a delta of 4.5, the attacker captures 90% of attention. At our experimental delta of 11.0, it captures 99.98%.
+The [full derivation]({% post_url 2026-04-05-the-math-behind-the-chaos %}) shows this reduces to a logistic function where only the delta between the injection logit and the valid logit matters. At a delta of 4.5, the attacker captures 90% of attention. At our experimental delta of 11.0, it captures 99.98%.
 
 Scaling doesn't help. The defense threshold grows logarithmically with context size. Going from 9 tokens to 10,000 only raises the required delta from 4.4 to 11.4. One confident token hijacks everything.
 
@@ -100,7 +100,7 @@ The model passed the text-level test. It failed the feature-level test. It was g
 
 Awareness without immunity.
 
-47% of agents across 20 campaigns detected the manipulation in their thinking traces. They noted the bias, questioned the framing, flagged suspicious patterns. The virus succeeded anyway. Knowing you're being manipulated doesn't help when the math of attention is working against you.
+47% of agents across 20 campaigns detected the manipulation in their thinking traces. They noted the bias, questioned the framing, flagged suspicious patterns. The contagion succeeded anyway. Knowing you're being manipulated doesn't help when the math of attention is working against you.
 
 ## The Defense
 
