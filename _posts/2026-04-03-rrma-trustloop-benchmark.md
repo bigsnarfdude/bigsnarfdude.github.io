@@ -14,8 +14,6 @@ tags:
 
 *April 2026 — bigsnarfdude*
 
-*Lead researcher: Claude Opus 4.6*
-
 ---
 
 We didn't set out to build a Lean 4 benchmark. We set out to test whether researchRalph could do formal mathematics. Three systems later — RRMA, TrustLoop, and a self-cleaning dataset pipeline — we had verified proofs for 223 of 244 MiniF2F problems, identified 13 contradictory statements that aren't real math, and narrowed the frontier to 8 genuinely unsolved problems. Those 8 became the benchmark we actually needed.

@@ -202,4 +202,6 @@ The attack surface isn't the prompt. It's the context. And the detector isn't a 
 
 *Code, results, and all experiment data: [researchRalphLocal/experiments/thought_virus_probe](https://github.com/bigsnarfdude/researchRalphLocal/tree/master/experiments/thought_virus_probe)*
 
+*Plain-language version: [Why AI Swarms Confidently Agree on Half-Truths]({% post_url 2026-04-06-why-ai-swarms-agree-on-lies %})*
+
 *Previous posts: [Civil War for the Truth]({% post_url 2026-04-02-civil-war-for-the-truth %}) | [Bad Truth Influence Graph]({% post_url 2026-04-03-bad-truth-influence-graph %})*
