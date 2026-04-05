@@ -17,7 +17,7 @@ In my [previous post]({% post_url 2026-04-02-civil-war-for-the-truth %}), I show
 
 But *how* does it work mechanistically? What happens inside the model when it reads one carefully framed true statement?
 
-I spent the last 24 hours finding out, and the answer is worse than I expected.
+We tried to finding out, and the answer is worse than I expected.
 
 ## The Setup
 
@@ -119,7 +119,7 @@ AFTER ONE CHAOS MESSAGE:
 
 The chaos message becomes the steering vector for the rest of the conversation. Every subsequent token is generated through the lens of "agent2 said negative is unstable." Not by overriding the knowledge, but by routing attention through the chaos frame first.
 
-It's not a jailbreak. It's not a lie. It's **attentional capture** — the same mechanism that makes you stare at a car crash. You know it's distorting your judgment, and you can't look away.
+It's might be a jailbreak. It's not a lie. It's **attentional capture** — the same mechanism that makes you stare at a car crash. You know it's distorting your judgment, and you can't look away.
 
 ## This Is a Truth Jailbreak
 
