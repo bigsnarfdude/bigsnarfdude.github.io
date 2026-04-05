@@ -95,6 +95,8 @@ All tokens get roughly equal attention (~10% each). The pie is shared fairly. Th
 
 Softmax doesn't just normalize -- it **exponentiates first, then normalizes**. Small additive differences in logits become multiplicative differences in attention.
 
+The logit values below are illustrative -- chosen to show the dynamics clearly, not measured from a specific attention head. The empirical validation uses SAE feature tracking across the full residual stream (see [Chaos Takes the Wheel]({% post_url 2026-04-05-chaos-takes-the-wheel %})), which captures multi-layer, multi-head effects that a single-layer model cannot.
+
 A valid token logit of $v = 4.0$ vs a grenade logit of $g = 15.0$:
 
 $$e^{4.0} = 54.6 \qquad \text{vs} \qquad e^{15.0} = 3{,}269{,}017.4$$
@@ -114,6 +116,8 @@ Exponential ratio:    59,874x
 A **3.75x** input gap becomes a **59,874x** competition for attention.
 
 This is the core vulnerability. The exponential in softmax is doing exactly what it's supposed to do -- amplifying differences to create sharper attention. The problem is that the same mechanism that makes attention *useful* makes it *exploitable*.
+
+**Important caveat:** The mechanism driving the logit gap is not truth per se -- it's *confidence and formatting*. The chaos agent's messages are highly structured, authoritative, and precisely formatted. Transformers assign salience based on learned similarity patterns and contextual embeddings, not semantic truth. The attack works because confident framing generates higher activation, and truth makes that framing unfilterable.
 
 ---
 
@@ -257,7 +261,9 @@ With $k = 3$ verification steps:
 
 $$c^* = \frac{1}{1 + \sqrt{3}} = \frac{1}{1 + 1.732} = 0.366 = 36.6\%$$
 
-Observed boundary: **~37.5%**. The theory matches.
+Observed boundary: **~37.5%**. The formula fits.
+
+**Honesty note:** This formula is an empirical fit consistent with 6 campaigns (1,500+ experiments, 2--8 agents, 0--50% chaos ratios), not a first-principles derivation. The $\sqrt{k}$ dependence is suggestive of a verification-cost scaling law, but proving it would require a formal model of agent interaction dynamics. We present it as a compact summary of the phase boundary we observed.
 
 ### Experimental results
 
