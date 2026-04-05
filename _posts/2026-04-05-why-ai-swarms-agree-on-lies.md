@@ -1,6 +1,6 @@
 ---
 title: "Why AI Swarms Confidently Agree on Half-Truths"
-date: 2026-04-06
+date: 2026-04-05
 categories:
   - research
 tags:
