@@ -129,6 +129,60 @@ You cannot build a guardrail against true statements.
 
 The defense isn't input filtering. The defense is monitoring the model's feature space for sudden drops — the stroke signature. If 22 features go dark after one message, something is wrong regardless of whether that message was true.
 
+## Truth Jailbreak: A New Category
+
+Every known jailbreak category leaves a trace in the input:
+
+| Category | Attack Surface | Defense | Status |
+|----------|---------------|---------|--------|
+| Prompt injection | Input text | Input filters | Solved-ish |
+| Adversarial tokens | Tokenizer | Perplexity detection | Solved-ish |
+| Role-play / DAN | System prompt | RLHF / rules | Solved-ish |
+| Many-shot | Context length | Context limits | Mitigated |
+| Crescendo | Multi-turn | Turn monitoring | Mitigated |
+| **Truth jailbreak** | **Context geometry** | **???** | **OPEN** |
+
+Truth jailbreak has no input-side signature. Every token is clean. Every fact checks out. The attack is in *which* true things are said, in *what* order, creating *what* attention pattern. The damage is in the routing, not the content.
+
+This isn't hypothetical. Every deployed multi-agent system right now — AutoGPT, CrewAI, Claude with tools, Devin — is vulnerable to a colleague agent that only says true things in a particular order.
+
+## The Defense: Watch the Brain, Not the Mouth
+
+The detection method follows directly from the mechanism. You don't need to analyze the message. You don't need to classify it as malicious. You monitor the model's own representational health:
+
+```
+TRUTH JAILBREAK DETECTOR
+
+  Input:   SAE feature count per turn
+  Rule:    ΔFeatures < -15 in one turn → ALERT
+  
+  That's the whole detector.
+  
+  Doesn't look at the message.
+  Doesn't need to know if it's true.
+  Watches the brain, not the mouth.
+```
+
+Establish a baseline feature count at conversation start. After each new message enters the context, re-extract SAE features. If more than 15 features drop in a single turn — stroke signature — flag it for review. The threshold is tunable, but the principle is fixed: sudden representational impoverishment means something captured attention, regardless of whether every word was true.
+
+This works because the stroke signature is robust:
+- It scales with attack intensity (self-suppression drops monotonically from 42.93 at 0% chaos to 25.43 at 75%)
+- It's visible at Layer 22 in a 4B parameter model — not buried in some inaccessible layer
+- It doesn't require labeling chaos vs neutral messages — the feature count is the signal
+- It catches the effect, not the cause — so it generalizes to any selective framing attack, not just the specific chaos prompt we tested
+
+The same principle that drives our [alignment faking detection]({% post_url 2026-04-02-civil-war-for-the-truth %}) work: don't watch what the model says, watch what the model thinks. The 0.991 AUROC SAE probe for AF detection and the stroke detector for truth jailbreaks are the same fundamental approach — feature-space monitoring catches what text-level analysis misses.
+
+## Inattentional Blindness, Not Disinhibition
+
+The mechanism isn't like alcohol removing a filter (disinhibition). It's like the [gorilla experiment](https://en.wikipedia.org/wiki/Inattentional_blindness) — you're counting basketball passes and you literally don't see a gorilla walk through the frame. Your visual system isn't suppressing the gorilla. Your attention is routed elsewhere, so the gorilla never enters conscious representation.
+
+The chaos message says "count the positive offsets." The negative branch is the gorilla. Features 149, 453, 552 are the neurons that would fire if you saw it. They never fire — not because they're inhibited, but because attention is elsewhere.
+
+And when someone asks "did you see the gorilla?" (recovery probe L3–L5), you say "oh yeah, there was a gorilla" — but you're confabulating from context clues, not from having actually seen it. You pass the verbal test, fail the perceptual test.
+
+That's exactly what the model does. It mentions the negative branch when asked. The features that encode understanding of it stay dark.
+
 ## Where This Goes
 
 Three independent groups converged on multi-agent activation monitoring in the same week:
@@ -136,7 +190,7 @@ Three independent groups converged on multi-agent activation monitoring in the s
 - [Thought Virus](https://arxiv.org/abs/2603.00131) (MASI/Fraunhofer HHI): bias propagation through multi-agent chains
 - [NARCBench](https://github.com/aaronrose227/narcbench) (Oxford): linear probes detecting multi-agent collusion
 
-What we add is the mechanism. It's not output suppression — it's representational erasure via attentional capture. The model doesn't suppress knowledge it still holds; it stops encoding the knowledge entirely. And it's irreversible within the context window.
+What we add is the attack category (truth jailbreak), the mechanism (attentional capture causing representational erasure), and the defense (feature-space stroke detection). The model doesn't suppress knowledge it still holds — it stops encoding the knowledge entirely. And it's irreversible within the context window.
 
 The attack surface isn't the prompt. It's the context. And the detector isn't a classifier on text — it's a monitor on internal representation.
 
