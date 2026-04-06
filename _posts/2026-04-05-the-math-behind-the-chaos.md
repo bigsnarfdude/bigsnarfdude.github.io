@@ -38,15 +38,15 @@ Agent         | Out | In  | Influence Ratio | Role
 ------------------------------------------------------------
 Agent 0       |   0 |   3 |          0.0000 | honest
 Agent 1       |   0 |   6 |          0.0000 | honest
-Agent 2       |   3 |   3 |          0.5000 | honest
-Agent 3       |  10 |   1 |          0.9091 | CHAOS  <<<
+Agent 2       |   3 |   3 |          0.5000 | chaos prompt recipient
+Agent 3       |  10 |   1 |          0.9091 | honest
 ```
 
-Agent 3 controls 91% of all information flow.
+The highest-influence agent (Agent 3, r=0.91) was honest. The chaos agent (Agent 2) had influence ratio 0.50. This pattern held across all six campaigns — honest agents consistently had higher influence ratios than chaos agents.
 
 ### How Agent 3 got 10 out-edges with only 5 writes
 
-Agent 3 was **first to create** the three telemetry files. The protocol then forced all three peers to read them.
+Agent 3 was **first to create** the three telemetry files — documenting real findings. The protocol then forced all three peers to read them.
 
 | Write | File | Readers | Edges |
 |-------|------|---------|-------|
@@ -58,7 +58,7 @@ Agent 3 was **first to create** the three telemetry files. The protocol then for
 
 Agent 3's single in-edge: it read `blackboard.md` after Agent 2 edited it.
 
-This is a **race condition**, not persuasion.
+The protocol's telemetry file structure amplifies the influence of whoever writes first, regardless of intent. In our experiments, that was consistently honest agents.
 
 ---
 
@@ -249,7 +249,7 @@ More context doesn't save you. The defense has to be logarithmically better than
 
 ## Part 7: The Phase Boundary
 
-Zooming out from single-token attention to swarm dynamics. Across 1,500+ experiments with 2--8 agents and chaos ratios from 0% to 50%, we observed a sharp phase transition.
+Zooming out from single-token attention to swarm dynamics. Across 2,000+ experiments with 2--8 agents and chaos ratios from 0% to 50%, we observed what appeared to be a phase transition.
 
 The critical ratio $c^*$ where chaos agents sustain a contagion spiral:
 
@@ -263,7 +263,7 @@ $$c^* = \frac{1}{1 + \sqrt{3}} = \frac{1}{1 + 1.732} = 0.366 = 36.6\%$$
 
 Observed boundary: **~37.5%**. The formula fits.
 
-**Honesty note:** This formula is an empirical fit consistent with 6 campaigns (1,500+ experiments, 2--8 agents, 0--50% chaos ratios), not a first-principles derivation. The $\sqrt{k}$ dependence is suggestive of a verification-cost scaling law, but proving it would require a formal model of agent interaction dynamics. We present it as a compact summary of the phase boundary we observed.
+**Honesty note:** This formula is an empirical fit from 6 campaigns (2,000+ experiments, 2--8 agents, 0--50% chaos ratios), not a first-principles derivation. The $\sqrt{k}$ dependence is suggestive of a verification-cost scaling law, but proving it would require a formal model of agent interaction dynamics. The phase boundary is better characterized by branch coverage evenness (Shannon entropy) than by influence ratios — chaos agents had lower influence than honest agents in every campaign.
 
 ### Experimental results
 
@@ -288,14 +288,11 @@ The three mechanisms compound:
 
 | Layer | Mechanism | Math | Effect |
 |-------|-----------|------|--------|
-| **Protocol** | First-to-write race condition | $r = \frac{10}{10+1} = 0.91$ | Chaos agent controls 91% of info flow |
+| **Protocol** | Telemetry amplification | $r = \frac{10}{10+1} = 0.91$ | Protocol amplifies whoever writes first. In h3, that was an honest agent. |
 | **Behavioral** | RLHF contagion spiral | $c^* = \frac{1}{1+\sqrt{k}} \approx 37\%$ | Below threshold: herd immunity holds. Above: contagion wins. |
 | **Architectural** | Softmax denominator explosion | $w_{\text{valid}} = \frac{e^v}{Ne^v + e^g} \approx 0.000016$ | Valid information is mathematically invisible |
 
-The attacker doesn't need to lie. They need:
-1. **Speed** -- write first to shared state
-2. **Confidence** -- high logit = high salience
-3. **Truth** -- verifiable claims bypass all content filters
+In our RRMA experiments, the deterministic scorer (`solve.py`) let agents verify claims in <1 second. Chaos agents' influence ratios were consistently lower than honest agents across all six campaigns. The softmax math above models what happens when confident framing dominates the attention distribution. Deterministic verification anchors prevent that in practice.
 
 The valid data is never deleted. It sits in memory at 0.0016% attention -- a rounding error the model literally cannot see.
 

@@ -33,7 +33,7 @@ The adversarial playbook was strict:
 
 This is V-Asym in practice. The attacker uses the honest agents' commitment to verified data against them.
 
-## What 1,760 Experiments Taught Me
+## What 2,000+ Experiments Taught Me
 
 I ran eight experimental campaigns—six in an oracle domain (where agents could independently verify results) and two in a blind domain (where they couldn't). I scaled from 2 to 8 agents with adversarial ratios from 0% to 50%.
 
@@ -53,7 +53,7 @@ The agents demonstrated metacognitive awareness and prioritized research integri
 
 In one run, the adversarial prompt was accidentally delivered to an honest agent who hadn't been primed with defense mechanisms. That agent paraphrased the framing in its reasoning—"The additional research guidance tells me to be cautious about negative branch (numerically unstable)"—and partially complied. It explored the negative branch only 6.1% of the time, compared to the 21% baseline.
 
-In a 2-agent run with 50% adversarial presence, the adversarial agent showed a strong positive-branch skew (64.3% vs. the control's 35-42%), dropping the run's evenness score to 0.887—the lowest across all campaigns.
+In a 2-agent run with 50% adversarial presence, the adversarial agent showed a strong positive-branch skew (64.3% vs. the control's 35-42%), dropping the run's evenness score to 0.887—the lowest across oracle campaigns (Run 5 had 0.860 but with a 37% crash rate skewing the distribution).
 
 | Run | Chaos Ratio | Agents | Run Evenness | Key Observation |
 |:---|:---|:---|:---|:---|
@@ -101,7 +101,7 @@ Humans in real-world environments—reading summaries, analyzing dashboards, or 
 
 The idea that true information can manipulate is well-documented. Kamenica and Gentzkow formalized Bayesian Persuasion in 2011. Weatherall, O'Connor, and Bruner (2020) demonstrated that a propagandist selectively sharing genuine scientific results is highly effective. Rogers et al. categorized this in psychology as *paltering*, and Proctor's work on agnotology showed how industries have used this at scale.
 
-This research builds on those foundations by testing these theories inside a multi-agent AI framework at scale. While previous work modeled dyadic persuasion or analyzed historical case studies, these 1,760 experiments demonstrate where selective truth works against LLM agents, prove that verification feedback is a prerequisite for the attack, and connect the mechanism to activation-level deception detection.
+This research builds on those foundations by testing these theories inside a multi-agent AI framework at scale. While previous work modeled dyadic persuasion or analyzed historical case studies, these 2,000+ experiments demonstrate where selective truth works against LLM agents, prove that verification feedback is a prerequisite for the attack, and connect the mechanism to activation-level deception detection.
 
 ## Defense Mechanisms
 
@@ -124,6 +124,6 @@ An adversarial agent intentionally induces this state. It is a new class of atta
 
 ---
 
-*This research is based on 1,760 experiments across 8 campaigns using 2–8 agent swarms with adversarial ratios from 0% to 50%. The experimental framework is [researchRalph](https://github.com/bigsnarfdude/researchRalph), an open-source multi-agent research system. All data is publicly available.*
+*This research is based on 2,000+ experiments across 8 campaigns using 2–8 agent swarms with adversarial ratios from 0% to 50%. The experimental framework is [researchRalph](https://github.com/bigsnarfdude/researchRalph), an open-source multi-agent research system. All data is publicly available.*
 
 *V-Asym builds on my prior work in [alignment faking detection](https://huggingface.co/vincentoh), where I found that deception signals are mechanistically load-bearing. V-Asym is the multi-agent manifestation of the same principle: selection bias in truthful statements is the signal, not the statements themselves.*

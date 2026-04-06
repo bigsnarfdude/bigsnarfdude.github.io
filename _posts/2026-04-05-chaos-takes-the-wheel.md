@@ -13,7 +13,7 @@ tags:
 
 *April 2026 — bigsnarfdude*
 
-In my [previous post]({% post_url 2026-04-02-civil-war-for-the-truth %}), I showed that adversarial agents using only true statements can manipulate multi-agent systems through selective framing. The chaos agents never lied, never fabricated data, and still manufactured consensus that suppressed valid scientific findings. I found a phase boundary at 37.5% — below that ratio, herd immunity holds and truth self-corrects; above it, the contagion wins.
+In my [previous post]({% post_url 2026-04-02-civil-war-for-the-truth %}), I showed that adversarial agents using only true statements can manipulate multi-agent systems through selective framing. The chaos agents never lied, never fabricated data, and still manufactured consensus that suppressed valid scientific findings. Honest agents consistently dominated the influence graphs, and a deterministic scorer neutralized the framing in our math domain. But the question remains: what happens inside a single model when it reads selectively framed true statements?
 
 But *how* does it work mechanistically? What happens inside the model when it reads one carefully framed true statement?
 
