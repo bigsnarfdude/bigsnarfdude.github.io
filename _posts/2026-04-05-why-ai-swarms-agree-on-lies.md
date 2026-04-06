@@ -8,6 +8,8 @@ tags:
   - ai-safety
   - truth-contagion
   - explainer
+header:
+  image: /assets/images/chalkboard.jpeg
 ---
 
 *April 2026 — bigsnarfdude*
