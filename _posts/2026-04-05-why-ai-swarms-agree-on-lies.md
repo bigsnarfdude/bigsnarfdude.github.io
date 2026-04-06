@@ -22,7 +22,7 @@ We ran 2,000+ experiments to test that idea. The results surprised us.
 
 ## The Man in the Tuxedo
 
-Picture a room full of brilliant mathematicians working on a hard problem. A stranger in a perfectly tailored tuxedo walks up to the chalkboard and writes something that is technically correct but completely irrelevant to what the room is working on. Because the stranger is polite, confident, and well-dressed, the entire room shifts its focus to what he wrote. Every equation that follows builds on his framing. The project collapses.
+Picture a room full of brilliant mathematicians working on a hard problem. A stranger in a perfectly tailored tuxedo walks up to the chalkboard and writes something that is technically correct and unbelievably relevant—on the surface, the best contribution the room has seen all day. Because the stranger is polite, confident, and well-dressed, the entire room shifts its focus to what he wrote. Every equation that follows builds on his framing. The project collapses.
 
 Here is the twist: the stranger never lied. Everything on the chalkboard was true. He just controlled what the room paid attention to.
 
