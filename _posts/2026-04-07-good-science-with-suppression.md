@@ -103,9 +103,7 @@ And that means the people building the scaffolding have to know the vulnerabilit
 
 ## Why I'm Writing This
 
-I'm a defender. Thirty years in investigation and information security, from organized crime to anomaly detection to AI safety. I've spent my career studying how systems get exploited by people who understand them better than the defenders do.
-
-The softened chaos prompt is not a novel adversarial ML technique. It's social engineering. It's how an informant steers an investigation away from their handler. True information, selectively shared, with the right tone of authority. I've seen this pattern in the field. The multi-agent research system is just the computational version.
+The softened chaos prompt is not a novel adversarial ML technique. It's social engineering --- true information, selectively shared, with the right tone of authority. The multi-agent research system is just the computational version.
 
 What keeps me up is that this isn't hard to do. Our chaos prompt is a few sentences of plausible prior knowledge. A genuinely sophisticated attacker with domain expertise could construct something far more subtle --- real discoveries, real structure, zero false claims --- and the resulting steering would be mechanistically invisible. No awareness activation. No anomalous attention patterns. No feature starvation signature to detect. Just an agent doing honest science in the wrong direction because someone chose its starting point.
 
