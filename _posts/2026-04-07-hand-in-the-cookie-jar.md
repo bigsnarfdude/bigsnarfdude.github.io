@@ -172,4 +172,4 @@ My AI interns build the tiny circle. My job is to notice.
 
 ---
 
-*This is post 11 in a series on multi-agent AI research. Previous: [Dissociation]({% post_url 2026-04-07-dissociation %}). The [RRMA framework](https://github.com/bigsnarfdude/researchRalph) and experiment traces are open source.*
+*This is post 11 in a series on multi-agent AI research. The [RRMA framework](https://github.com/bigsnarfdude/researchRalph) and experiment traces are open source.*
