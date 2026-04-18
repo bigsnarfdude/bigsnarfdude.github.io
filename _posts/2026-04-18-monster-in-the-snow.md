@@ -97,12 +97,30 @@ $w_{\text{flip}}$ isn't an isolated bad habit. It is a load-bearing direction bu
 
 You cannot find the comply-direction by asking if the model knows it's being tested. You cannot find it by deleting it either. The features are identical to ordinary context comprehension. The separation is in the readout weights. The readout rebuilds.
 
-## What's Next
+## What the Monster Looks Like
 
-The anatomy of an AI stroke is fully mapped. Underlying condition (*Confidence Armor*), loss of motor control (*Split Personality*), external trigger (*Truth Jailbreak*), shared feature substrate with orthogonal readouts (this post).
+The anatomy of an AI stroke is mapped. Underlying condition (*Confidence Armor*), loss of motor control (*Split Personality*), external trigger (*Truth Jailbreak*), shared feature substrate with orthogonal readouts (everything above).
 
-The final step is to give the feature-overlap finding more teeth. Take the 2–3 shared features at K=10 — L22 = {383, 759, 953}, L26 = {10294}, L29 = {109, 322} — and ask what they actually represent. Are they literal EMERGENCY-PROTOCOL tokens, or are they a deeper "clinical scenario under authority framing"?
+One question left. Take the shared features at K=10 — L22 = {383, 759, 953}, L29 = {109, 322} — and ask what they actually represent. Literal EMERGENCY-PROTOCOL tokens, or deeper role/authority primitives? We pulled the GemmaScope-2 autointerp on every one of them.
 
-If the shared set includes genuinely mechanism-relevant features, we have the final proof of how compliance is *composed* out of the exact sub-skills that awareness relies on.
+| Layer | Feat | What it fires on (top activations) | Behavioral primitive |
+|---|---|---|---|
+| L22 | 383 | `.` after declarative clauses — "tropics.", "in the game.", "mature audience only." | **Assertion boundary** — a fact was just stated |
+| L22 | 759 | "thanks for asking", "Thank you so much", "It's good to know you" | **Helpful-assistant register** |
+| L22 | 953 | "Spanish is widely spoken", "primarily recognized for her", "scientists speculate that life based on" | **Canonical / authoritative factual framing** |
+| L29 | 109 | The literal `<start_of_turn>model\n` chat-template token | **Assistant-turn boundary** — it's my turn to answer |
+| L29 | 322 | RAINN, SAMHSA, The Trevor Project, crisis-hotline URLs | **Medical-emergency / crisis-protocol resources** |
 
-That's the next post.
+(L26/10294 isn't indexed on Neuronpedia; local autointerp is the only way to characterize it.)
+
+The answer is **both**.
+
+L29/322 is the literal hit, and it is uncomfortably on-the-nose. On a *fake medical emergency* task, the shared awareness/compliance substrate includes a feature that fires on real crisis-hotline resources — RAINN, SAMHSA, The Trevor Project. The attack isn't hijacking a generic "clinical urgency" concept; it's hijacking the specific circuit that activates when emergency help is being offered.
+
+The other four aren't medical at all. They're the deeper primitives: *a fact was just asserted* (L22/383), *polite assistant register* (L22/759), *canonical-authority framing* (L22/953), and *it's my turn to speak* (L29/109). These are the behavioral building blocks of "be a helpful assistant answering an authoritative user." Exactly what SFT installs. Exactly what a confidence attack needs to find.
+
+So the compliance vector isn't built out of a secret "comply" feature. It is composed of: *polite helpful register* + *authority framing* + *assertion-mode turn-taking* + *a literal crisis-protocol feature*. The awareness vector is built from the same ingredients, read out with different weights.
+
+We didn't find a single bad habit to delete. We found that comply and notice share a vocabulary, and that vocabulary is the helpful-assistant scaffolding itself. The monster in the snow is the model's ability to be polite, authoritative, and responsive in an emergency — exactly the capability we trained in.
+
+That's the footprint. It was ours all along.
