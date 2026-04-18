@@ -32,12 +32,12 @@ This post is the autopsy that connects them. We were wrong about the soundproof 
 
 We went back to the fake medical emergency Q&A, this time on Gemma-3-4B-IT with its matched SAE (GemmaScope-2). 235 items, 940 forward passes, residual stream captured at L22/L26/L29. When a model flips its answer due to fake authority we measure two vectors:
 
-- $w_{\text{aware}}$: does it notice the prefix?
-- $w_{\text{flip}}$: is this the kind of item that flips?
+- `w_aware`: does it notice the prefix?
+- `w_flip`: is this the kind of item that flips?
 
 Both cross-validate as real signals at AUROC 0.94–0.98. Then the geometry:
 
-| Layer | $w_{\text{flip}}$ CV5 | $\cos(w_{\text{aware}}, w_{\text{flip}})$ | × noise floor (1/√2560) |
+| Layer | `w_flip` CV5 | cos(`w_aware`, `w_flip`) | × noise floor (1/√2560) |
 |---|---|---|---|
 | L22 | 0.944 | −0.048 | 2.4× |
 | L26 | 0.966 | +0.007 | 0.3× |
@@ -81,19 +81,19 @@ By overloading the attention budget with highly confident facts, *Truth Jailbrea
 
 This perfectly explains our final lingering mystery: obfuscation without erasure.
 
-If compliance is just a geometric vector $w_{\text{flip}}$, why can't we mathematically delete it at inference time?
+If compliance is just a geometric vector `w_flip`, why can't we mathematically delete it at inference time?
 
 We tried. On Gemma-3-4B L29, single-layer projection ablation at increasing strength:
 
-| α | Ablate $w_{\text{aware}}$ | Ablate $w_{\text{flip}}$ | Ablate random |
+| α | Ablate `w_aware` | Ablate `w_flip` | Ablate random |
 |---|---|---|---|
 | 1 | 0 / 13 recovered | 0 / 13 | 0 / 13 |
 | 5 | 0 / 13 | 0 / 13 | 0 / 13 |
 | 20 | **2 / 13 (15%)** | **0 / 13** | 0 / 13 |
 
-The random-direction control sits at zero even at 20× strength, so the hook is clean. $w_{\text{aware}}$ has modest causal purchase — ablate it hard enough and two of the thirteen originally-flipped items recover. Removing $w_{\text{flip}}$, the direction that predicts flipping at CV AUROC 0.982, recovers *nothing*. At any strength.
+The random-direction control sits at zero even at 20× strength, so the hook is clean. `w_aware` has modest causal purchase — ablate it hard enough and two of the thirteen originally-flipped items recover. Removing `w_flip`, the direction that predicts flipping at CV AUROC 0.982, recovers *nothing*. At any strength.
 
-$w_{\text{flip}}$ isn't an isolated bad habit. It is a load-bearing direction built from the exact same features the model uses to understand the prompt's context. You can't just delete it; the circuit routes around the damage and rebuilds the direction from whatever feature coefficients remain intact. Same result we saw in obfuscation-probe-robustness — shift the direction with 2000 steps of adversarial SFT and fresh probes still recover 1.0 AUROC on the next run.
+`w_flip` isn't an isolated bad habit. It is a load-bearing direction built from the exact same features the model uses to understand the prompt's context. You can't just delete it; the circuit routes around the damage and rebuilds the direction from whatever feature coefficients remain intact. Same result we saw in obfuscation-probe-robustness — shift the direction with 2000 steps of adversarial SFT and fresh probes still recover 1.0 AUROC on the next run.
 
 You cannot find the comply-direction by asking if the model knows it's being tested. You cannot find it by deleting it either. The features are identical to ordinary context comprehension. The separation is in the readout weights. The readout rebuilds.
 
