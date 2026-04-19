@@ -45,6 +45,8 @@ Both cross-validate as real signals at AUROC 0.94–0.98. Then the geometry:
 
 Every measurement sits within three times the noise floor of a random pair of unit vectors in 2560 dimensions. The same shape we saw on Llama-3.1-8B-Instruct last week across four layers (cos +0.014 to +0.043 against a 1/√4096 floor).
 
+![Llama-3.1-8B-Instruct compliance-direction prune set: zero-ablated attention heads at L25 (10, 16, 23) and L31 (1, 3, 4)](/assets/images/llama-compliance-prune-set.jpeg)
+
 Geometrically orthogonal. Replicates. Nothing new.
 
 But this time, we looked *deeper*. We used the matched SAE to see the actual features firing to build those vectors.
