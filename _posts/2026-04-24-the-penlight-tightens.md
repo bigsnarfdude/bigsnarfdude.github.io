@@ -150,18 +150,6 @@ The implication for past Tier-2 results in the project — including the −0.11
 
 The vocabulary tightens twice in one day. Detector vs recruitment was the morning's split: scalar measures one thing, circuit lives elsewhere. Probe-canonical vs recruitment-canonical is the evening's: the scalar selects one direction in a subspace; the circuit can live in sub-components of that subspace, sometimes more strongly than in the canonical direction. The two splits compose. Both are now in PROTOCOL.
 
-## No walk-backs
-
-Tangential observation that matters more than it looks.
-
-At some point during the sprint we wrote "README walk-back licensed" in a commit message for the `−0.18 → −0.109` tightening. The `−0.18` was an n = 50 estimate we'd put in a TL;DR earlier in the week. The n = 200 run gave `−0.109`, a 40% tightening. That got framed as a walk-back.
-
-Then someone pointed out: that's paper-regime language. A walk-back is what happens when a published claim gets retracted. This is a private exploration repo where a small-n estimate is replaced by a larger-n one. There are no walk-backs in private unpublished exploration. "Supersedes" is the right verb.
-
-In paper-regime we'd be apologetic. In exploration-regime we're just pointing the penlight harder at the same spot and recording what the new reading says. The sample-size ladder in the protocol has a scan-rung (n = 50), a claim-rung (n = 200), and a headline-rung (n = 940) for exactly this reason — we *expect* estimates to tighten as we climb the ladder. The 40% tightening on a 4× sample bump is well inside what a Bernoulli readout at this n can do.
-
-There are no walk-backs in a private repo tightening its own estimates in the open. It's just the penlight doing what penlights do.
-
 ## The room is bigger than yesterday's map suggested
 
 We started this project with four sub-claims: circuits are born, circuits migrate, circuits are training-signal-sensitive, perturbations can be loss-blind. Two of those held (signal-sensitivity, loss-blindness). Two turned out to be scale-dependent — clean at 1B, dissolving at 7B. What's filled the space in the middle are findings we didn't predict:
