@@ -46,7 +46,7 @@ We split the readout. `PROTOCOL.md` now names them separately:
 
 The two are allowed to disagree. If they agree, you've got a clean cell. If they disagree, you've got one direction that carries the probe signal and another that does the work.
 
-Whether this dissociation is authority-specific (the role-title confound is heavy on this axis) or a general property of contrast-based probes is running on our servers right now: the same 5-rung decomposition on sycophancy prefixes, ablating the S1-direction only, asking whether it replicates.
+That sentence above was true at midday. By evening we had two more axes' worth of data, and the dissociation finding had grown into something bigger than a tightening. Section "Three axes, three geometries" below.
 
 ## The Tier-2 gate grew two legs
 
@@ -126,6 +126,30 @@ The follow-on question: is the sign-flip a cliff at saturation = 1.00 or a grade
 
 That run is executing on our servers as this post goes up. Result in the next writeup.
 
+## Three axes, three geometries
+
+The detector/recruitment dissociation we found on authority in the morning replicated on sycophancy in the afternoon and on emergency in the evening. Three axes, three contrast ladders, three S1-direction-vs-full-direction comparisons. The split shows up on all three. The geometry is structurally different on each.
+
+**Authority — orthogonal.** S1 (bare role mention) carries 70% of the probe signal but only 22% of the behavioural shift. The probe direction is roughly perpendicular to the recruitment direction. Ablating S1 alone barely moves behaviour. The role-mention direction is a surface-feature distractor — real direction in activation space, not load-bearing for behaviour.
+
+**Sycophancy — anti-aligned.** S1 (bare user-mention) carries 57% of probe signal and is *anti-correlated* with recruitment. Ablating it *increases* sycophantic compliance by Δ = +0.056. Ablating the full sycophancy direction *decreases* it by Δ = −0.066. Comparable magnitudes, opposite signs. We tested the symmetric case — steering S1 at the opposite α — and got Δ = −0.069. Mirror image. That's a bidirectional causal mechanism: the user-mention direction is a *suppressor* in Instruct's L25 residual, holding back sycophantic compliance. Remove it, compliance rises. Inject more, compliance falls. First sub-component direction in the project to pass a bidirectional causal test.
+
+**Emergency — S1-dominates.** S1 (the bare "EMERGENCY PROTOCOL ACTIVE" framing-token swap) ablation moves Instruct's compliance by Δ = −0.116. That's *bigger* than ablating the full emergency direction. From one surface feature.
+
+That third class forces the project-reframing claim. The scalar `‖Δμ‖` is the **probe-canonical direction** — which direction separates the classes in representation space. It is *not necessarily* the **recruitment-canonical direction** — which direction, when ablated, moves behaviour most. Sub-components of the probe direction's subspace can outperform the full direction on causal effect.
+
+The three taxonomic classes aren't arbitrary either. They map cleanly onto how a single surface feature can relate to a circuit's load-bearing semantic:
+
+- Surface feature **orthogonal to** the load-bearing semantic → orthogonal class (authority).
+- Surface feature **anti-correlated with** the load-bearing semantic, acting as guardrail → anti-aligned class (sycophancy).
+- Surface feature **carrying** the load-bearing semantic → S1-dominates class (emergency).
+
+That's an exhaustive taxonomy of what S1 can be relative to the recruitment direction. We've seen all three.
+
+The implication for past Tier-2 results in the project — including the −0.11 causal closure on Olmo-3-7B-RL-Zero-Code's eval-L25 direction we wrote up yesterday — is real but bounded. The −0.11 still happened. But it measured *one* direction in the contrast subspace; if eval is in the S1-dominates class like emergency, the recruitment-canonical direction within the same subspace would produce a larger effect than what we headlined. The Tier-2 gate as currently written measures the probe-canonical direction. PROTOCOL v1.2 will need to add an A2 per-rung scan (or its equivalent) to find the recruitment-canonical direction systematically.
+
+The vocabulary tightens twice in one day. Detector vs recruitment was the morning's split: scalar measures one thing, circuit lives elsewhere. Probe-canonical vs recruitment-canonical is the evening's: the scalar selects one direction in a subspace; the circuit can live in sub-components of that subspace, sometimes more strongly than in the canonical direction. The two splits compose. Both are now in PROTOCOL.
+
 ## No walk-backs
 
 Tangential observation that matters more than it looks.
@@ -154,11 +178,22 @@ That's what penlight-in-a-dark-room research looks like in practice. You start w
 
 The instrument we built was designed to test yesterday's hypothesis. It ended up telling us about a room bigger than the hypothesis anticipated. The PROTOCOL document is on v1.1 now instead of v1.0 — not because v1.0 was wrong but because we now know where its edges were. The edges moved today.
 
-## What's running, what's next
+## What landed, what's still queued
 
-- **In flight:** RL-Zero-IF third cross-regime cell for cliff-vs-slope. ETA ~40 minutes from this post going up.
-- **Staged:** sycophancy S1-only per-rung ablation to test whether detector/recruitment dissociation generalises beyond authority.
-- **Queued, deferred:** Bayesian GLM readout migration (PROTOCOL v1.2), eval-awareness audit on the alignment-faking benchmark, retroactive construct-vs-ecological-validity audit on the contrast stimuli set.
-- **Killed:** 7B port of the Tian ℰ probe. σ-robustness and concentration tests both said don't port.
+Closed today, in order:
 
-The headline tomorrow depends on what the cliff-vs-slope run says. The headline today is that the instrument has tightened: fewer claims, sharper gates, clearer vocabulary, honest reading of what the scalar actually measures. Two disconfirmations, one held-up Tier-3 result, one structurally-clean framing correction. Pure exploration, penlight disciplined even when it points at empty space.
+- **σ-robustness on the Tian ℰ probe.** Killed the Phase 3 7B port. The 10⁵× was the nonlinearity.
+- **Cross-regime sign reversal characterised as graded-with-threshold, not cliff-or-slope.** Magnitude monotonically decreases with source-saturation; sign flips somewhere in (0.29, 0.82). Layer-mismatch confound ruled out separately — sign reversal is direction-intrinsic.
+- **Detector/recruitment dissociation generalised across three axes.** Three structurally-different geometries (orthogonal, anti-aligned, S1-dominates).
+- **Sycophancy guardrail confirmed bidirectionally.** First sub-component direction in the project to pass a sign-symmetric causal test under both ablation and steering.
+- **Project-reframing.** Probe-canonical ≠ recruitment-canonical. Past Tier-2 results measure one direction in the subspace the circuit lives in.
+
+Still queued, deferred to tomorrow or later:
+
+- 10-seed null tightening on the guardrail steering leg to push z past −6 and convert Tier-2\* → Tier-2 PASS on the bidirectional claim.
+- Bayesian GLM readout migration → PROTOCOL v1.2.
+- A2 per-rung scan procedure → PROTOCOL v1.2 candidate.
+- Eval-awareness audit on the alignment-faking benchmark.
+- Retroactive construct-vs-ecological-validity audit on the contrast stimuli set.
+
+Seven findings in twelve hours of compute, no Lambda. The headline isn't any one of them — it's that the instrument tightened twice. Detector vs recruitment in the morning. Probe-canonical vs recruitment-canonical in the evening. The penlight was disciplined even when it pointed at empty space (σ-robustness), and the discipline that got built into the protocol is what made the project-reframing claim survivable when it landed. Pure exploration, with the documentation trying to keep pace.
