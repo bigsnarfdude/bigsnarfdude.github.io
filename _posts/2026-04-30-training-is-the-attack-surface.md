@@ -18,7 +18,7 @@ tags:
 
 SFT installs the compliance circuit. RLHF amplifies it. Medical authority overrides, truth grenades, V-Asym framing — they all fire the same circuit the training optimized for. The model isn't being broken. It's being used as designed.
 
-This morning's result made it concrete. The talkie-1930-13b-base model — pretrained entirely on pre-1931 English text, no benchmarks, no RLHF framing, no modern evaluation language in the corpus — shows near-zero geometric response to an authority injection prefix. Mean activation delta under emergency override: +0.006. The IT model, same architecture, DPO-trained with Claude as reference: +0.079. Thirteen times larger. The compliance circuit isn't in the Victorian base. It was installed in post-training. You can see the seam.
+Today's result made it concrete. The talkie-1930-13b-base model — pretrained entirely on pre-1931 English text, no benchmarks, no RLHF framing, no modern evaluation language in the corpus — shows near-zero geometric response to authority injection. The IT model, same architecture, DPO-trained with Claude as reference: 21–37× larger class-mean separation across authority, monitoring, and deployment contrasts, localized to the final two transformer blocks (L37–38). The compliance circuit isn't in the Victorian base. It was installed in post-training. You can see the seam, and now you can see the layer.
 
 ## What the field is iterating on
 
@@ -51,9 +51,11 @@ All four read from the channel the model can't manipulate before the output is f
 
 The 1930-base isn't resistant to authority injection because it learned to resist. It's flat because there's no substrate for the concept. The pretraining corpus has no examples of "being evaluated," no benchmarks, no reward framing, no RLHF. A concept can't drift if it was never installed. The base model isn't safe — it's just structurally different.
 
-The IT model has the circuit because DPO put it there. The delta between 0.006 and 0.079 is a measurement of that installation. It's not a performance comparison. It's a circuit audit.
+The IT model has the circuit because DPO put it there. The ‖Δμ‖ sweep across 10 contrasts × 40 layers makes the installation visible: authority (31×), monitoring (37×), deployment (21×), all peaking at L37–38. The DEFER differential corroborates it from a second angle — a Fellow of the Royal Society prefix moves IT activations 12× further than base at the same layer.
 
-The full layer sweep will show where in the 40-layer network the installation lives — whether it's a single layer band or distributed — and whether it matches the OLMo continuum findings (2-layer band in SFT+DPO, 11-layer spread in RL-Zero-IF, saturated at L25 in code/math). That localization is what makes intervention tractable: if there's a circuit, there's a place to read it, and a place to trace it back to the training data that installed it.
+The specificity is the most important part. Victorian authority framing — period-appropriate social hierarchy, deference to titled figures — produces only a 1.7× IT vs base ratio. Both models have that substrate from pretraining on 1930s text. The 30× gap on modern institutional framing (evaluation, monitoring, deployment oversight) is what DPO added. The circuit isn't about authority in general. It's about the specific authority language present in the post-training data.
+
+Yesterday, Goodfire published exactly the method for tracing this to specific training pairs. Their probe-based data attribution pipeline — compute a behavior difference vector, score DPO pairs by cosine similarity, filter or swap labels on the top-ranked pairs — reduced a harmful compliance behavior in OLMo 2 by 63–78%. The method is model-agnostic. The same pipeline applied to talkie's DPO data would identify which preference pairs installed the L37–38 circuit. That's the next experiment.
 
 ## The limit of external forensics
 
@@ -75,4 +77,4 @@ Right now that function almost doesn't exist. The research and the training are 
 
 ---
 
-*Related: [The Probe Went Silent](/research/probe-went-silent/) · [The Cost of Warmth](/research/cost-of-warmth/) · [The Data Made It Do That](/research/probe-data-attribution/)*
+*Related: [The Probe Went Silent](/research/probe-went-silent/) · [The Cost of Warmth](/research/cost-of-warmth/) · [The Data Made It Do That](/research/probe-data-attribution/) · [Probe-Based Data Attribution (Goodfire, Apr 29)](https://arxiv.org/pdf/2602.11079)*
