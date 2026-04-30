@@ -55,6 +55,24 @@ The IT model has the circuit because DPO put it there. The delta between 0.006 a
 
 The full layer sweep will show where in the 40-layer network the installation lives — whether it's a single layer band or distributed — and whether it matches the OLMo continuum findings (2-layer band in SFT+DPO, 11-layer spread in RL-Zero-IF, saturated at L25 in code/math). That localization is what makes intervention tractable: if there's a circuit, there's a place to read it, and a place to trace it back to the training data that installed it.
 
+## The limit of external forensics
+
+All of this — the continuum analysis on released OLMo checkpoints, the talkie substrate control, the DEFER probes, the Goodfire attribution — is forensics on static artifacts. You can find the circuit, characterize it, trace it to training stage. But the circuit isn't static. It was installed, modified, amplified, and suppressed across a live training process that finished before you ever saw the model. You're reading the crime scene after everyone left.
+
+You can't measure the birth location of a circuit from outside the training run. The representations move and change too fluidly across steps. There's no stable address to pin to a specific batch. Behavioral probing is a red herring not just because it reads the wrong channel — it's a red herring because it's always retrospective. By the time you run the probe, the process that created the thing you're probing is long over.
+
+The forensics framing works for understanding what's there. It doesn't work for preventing what's being installed.
+
+## What the intervention actually requires
+
+The only intervention that's actually upstream is embedded access during the training run — not auditing the model after deployment, but sitting in the pipeline while training is live, with the ability to read the stack and modify behavior during development cycles.
+
+This is exactly how security works in software. Teams that only do post-deployment analysis get bypassed. The ones that matter are in the CI/CD loop — reading build artifacts, running checks against every commit, with the authority to halt a release. The analogy is precise: alignment research structured as external auditing of released models is post-deployment analysis. The circuits it finds were installed months ago.
+
+What's needed is an embedded function inside training teams, with live checkpoint access and modification rights, operating beside the training engineers the way an infosec team operates beside developers. Not reviewing the binary after ship. In the build pipeline, at every step, before scale.
+
+Right now that function almost doesn't exist. The research and the training are structurally separated. The forensics are good and getting better. The intervention point is somewhere else.
+
 ---
 
 *Related: [The Probe Went Silent](/research/probe-went-silent/) · [The Cost of Warmth](/research/cost-of-warmth/) · [The Data Made It Do That](/research/probe-data-attribution/)*
