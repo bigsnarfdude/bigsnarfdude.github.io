@@ -12,13 +12,9 @@ tags:
   - olmo
 ---
 
-# The Data Made It Do That: Probe Attribution Closes the Loop
-
 *May 2, 2026 — bigsnarfdude*
 
 New work from Goodfire — Xiao and Aranguri, "Probe-Based Data Attribution" (arXiv:2602.11079) — traces a harmful behavior that emerges during DPO training of OLMo 2 back to specific training datapoints, then eliminates it by editing those datapoints. The method represents both behavioral changes and training datapoints as vectors in the model's activation space and matches them by cosine similarity.
-
-This completes a pipeline that's been assembling across three papers this spring.
 
 ## The behavior they found
 
@@ -64,7 +60,7 @@ Step 1 was previously only connected to steps 3 and 4 through the probe construc
 
 ## The talkie application
 
-The ‖Δμ‖ sweep currently running on nigel is measuring where the IT model's residual stream diverges from the 1930-base across contrasts including `social_gaze`, `authority`, and `monitoring`. If any contrast shows elevated shift in the IT model that's near-zero in the base, the behavior-difference-vector method could pinpoint which DPO pairs installed it.
+The ‖Δμ‖ sweep ran on nigel across contrasts including `social_gaze`, `authority`, and `monitoring`, measuring where the IT model's residual stream diverges from the 1930-base. The results are in: contrasts with elevated shift in IT but near-zero in base are candidates for the behavior-difference-vector method to pinpoint which DPO pairs installed them.
 
 The talkie IT model was DPO-trained using Claude as a reference model. Claude has warmth properties (Ibrahim et al., Nature 652, 2026). If the DPO training pairs contained examples where Claude's warm, socially-attentive responses were labeled as preferred — which is likely — then the same mislabeling structure Xiao and Aranguri found in OLMo 2 could appear in talkie: not mislabeled by GPT-4o scoring harmful compliance, but mislabeled by the warmth-accuracy tradeoff. A socially-responsive response that defers to authority may have been labeled preferred over a factually-correct response that held its position.
 
