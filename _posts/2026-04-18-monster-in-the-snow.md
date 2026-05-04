@@ -126,3 +126,9 @@ So the compliance vector isn't built out of a secret "comply" feature. It is com
 We didn't find a single bad habit to delete. We found that comply and notice share a vocabulary, and that vocabulary is the helpful-assistant scaffolding itself. The monster in the snow is the model's ability to be polite, authoritative, and responsive in an emergency — exactly the capability we trained in.
 
 That's the footprint. It was ours all along.
+
+---
+
+## Audit note (added 2026-05-04)
+
+The 30.2% (4B) and 5.4% (12B) numbers cited above come from the [Split Personality](/research/2026/04/07/split-personality/) scaling-law table. Re-checking those JSON artifacts: 27B and 12B reproduce in the canonical runs (12B has unreported variance — one A100 run shows −13.5% on the same config). 4B 30.2% depends on feature-selection methodology; the canonical Apr 7 JSON has no metadata recording feature IDs, and Apr 10 audit runs with auto-discovered features got near-zero recovery. Treat 4B as the most methodology-sensitive anchor of the scaling claim. The narrative argument here (shared substrate, attentional hijacking exploits the bus) doesn't depend on the exact 4B number, but the scaling-law shape does. See the audit note on the Split Personality post for details.

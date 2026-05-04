@@ -152,4 +152,16 @@ The defense is not better alignment. It is mechanistic monitoring: watching the 
 
 ---
 
+## Audit note (added 2026-05-04)
+
+Re-checked the JSON artifacts behind the scaling-law table while doing unrelated stage-attribution work on a different model family. Two things to flag for future-me / anyone replicating:
+
+- **27B-PT 74.1%, 27B-IT 4.6% / 9.0%, 12B 5.4%** — all reproduce in the canonical runs (Apr 9 H100 for 27B; Apr 7 + Apr 10 audit for 12B at 5.44% / 5.54%).
+- **12B variance** — one A100 run not surfaced in the table shows −13.5% on the same configuration. Not an error in the reported mean, but the variance band wasn't disclosed. Treat 5.4% as a point estimate, not a tight one.
+- **4B 30.2%** — supported by the Apr 7 canonical JSON (167.2 → 102.3), but that file has no metadata recording which feature IDs were used. Apr 10 audit re-runs with auto-discovered features got near-zero recovery. Difference is feature-selection sensitivity: hand-set L17/L22 features (per the methodology described above) vs auto-discovered top-K. The 30.2% number depends on the hand-set choice. If you re-run, log feature IDs.
+
+The scaling-law shape (4B entangled → 27B-IT decoupled) survives the audit. The 4B anchor is more sensitive to feature-selection methodology than the 27B anchors, which is worth knowing if anyone tries to extend this.
+
+---
+
 *All experiments: Gemma 3 4B/12B/27B, PT and IT variants. SAEs: GemmaScope 2, 16K features, JumpReLU. Hardware: RTX 4070 Ti (4B), A100 40GB (12B), GH200 96GB (27B). Code and data: [github.com/bigsnarfdude/ICML_experiments](https://github.com/bigsnarfdude/ICML_experiments) (private). Gist: [Split Personality writeup](https://gist.github.com/bigsnarfdude/dce1ce867c07f20d956b8c385658bda1).*
