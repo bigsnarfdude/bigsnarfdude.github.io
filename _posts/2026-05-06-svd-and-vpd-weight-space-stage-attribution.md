@@ -99,3 +99,15 @@ The 50k-step VPD run was terminated early (11800 steps) due to compute cost. The
 The weight-space picture is converging on a simple story: SFT writes early and precisely; DPO writes large but orthogonally. The activation-space consequence (DEFER probe at L29–L36, DPO relocation to L37–38) follows from the weight-space installation. That's the developmental interpretability claim — not just where a circuit lives, but which training stage put it there.
 
 Code: [continuum repo](https://github.com/bigsnarfdude/continuum) — `src/experiments/vpd_weightdiff.py` for SVD, `output/vpd_weightdiff/` for results and VPD log.
+
+---
+
+## Also Today: SAE Probes Bypass Behavioral Inoculation
+
+From a parallel sprint on conditional misalignment — a different model, different method, same theme of weight-space vs activation-space blind spots.
+
+![SAE probes bypass behavioral inoculation to detect hidden misalignment](/assets/images/sae_bypass_inoculation.png)
+
+The 2×2: aggregate dense sweeps (‖Δμ‖) detect explicit misalignment but go blind when a model has been behaviorally inoculated to suppress surface cues. SAE probes (GemmaScope 2, L13, 16k features) maintain detection at AUROC ≈ 0.58 because high-dimensional sparse features resist suppression — 7/10 top discriminative features survive inoculation intact.
+
+The connection to the SVD/VPD work: both results are about the gap between what a model *does* and what its weights *contain*. Inoculation changes behavior without removing the representation. SFT writes a direction into weights at L5 that the activation-space probe reads at L29–L36. The representational substrate persists independently of the behavioral surface in both cases.
