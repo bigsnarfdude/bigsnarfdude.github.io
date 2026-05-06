@@ -14,6 +14,8 @@ tags:
 
 *May 6, 2026 — bigsnarfdude*
 
+> **Caveat added 2026-05-06 — control validation.** The "DMU sweep shows DPO has two separable effects: *magnitude amplification* at L24–25" claim was written before running Lindsey Criterion 2 control contrasts. Control validation shows that ‖Δμ‖ magnitude at the IT stage is not axis-specific: a semantically unrelated contrast (`control_transit`) produces a 4.09× base→IT ratio vs 2.76× for `emergency`. The *magnitude amplification* label is unsupported. The *layer-relocation* finding (L21→L37–38 for external-observer contrasts) is a relative comparison between targeted contrasts and is not invalidated. The weight-space findings (SVD cos_sim, VPD) are independent of activation magnitude and are unaffected. See [`docs/findings/control_validation_results.md`](https://github.com/bigsnarfdude/continuum/blob/master/docs/findings/control_validation_results.md).
+
 Most mechanistic interpretability works in activation space. You run prompts through a model, capture residual stream vectors, train a linear probe, and call it a circuit. That's the standard pipeline, and it works. But it has a blind spot: it only tells you where a circuit *lives in the finished model*, not *which training stage put it there*.
 
 That distinction matters. If you want to remove a behavior, you need to know which stage installed it — pretraining, SFT, or DPO. You can't surgically edit something you can't locate in training time.
@@ -24,7 +26,7 @@ Today we ran two complementary methods — SVD of weight diffs and full VPD (Adv
 
 ## The Setup
 
-We have three checkpoints of talkie-1930-13b: base (pretraining only), SFT (supervised fine-tuning on instruction data), and IT (DPO-refined instruction-tuned). The activation-space picture was already established — a DEFER authority-register probe peaks at layers 29–36 (70–90% depth), and a DMU sweep shows DPO has two separable effects: magnitude amplification at L24–25 on eval-awareness contrasts, and layer relocation to L37–38 on external-observer contrasts. What we didn't have was the weight-space account.
+We have three checkpoints of talkie-1930-13b: base (pretraining only), SFT (supervised fine-tuning on instruction data), and IT (DPO-refined instruction-tuned). The activation-space picture was already established — a DEFER authority-register probe peaks at layers 29–36 (70–90% depth), and a DMU sweep shows DPO has two separable effects: magnitude amplification at L24–25 on eval-awareness contrasts *(caveat: see note at top — subsequent control validation does not support magnitude amplification as axis-specific)*, and layer relocation to L37–38 on external-observer contrasts *(this relative finding is not affected by the control validation)*. What we didn't have was the weight-space account.
 
 ---
 
