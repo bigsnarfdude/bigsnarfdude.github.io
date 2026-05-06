@@ -13,7 +13,7 @@ tags:
 ---
 
 
-*Draft. Numbers from n=50 across base/SFT/IT on talkie-1930-13b and base/SFT/IT on OLMo-3-7B. All claims are Tier-1 (detector-level) unless explicitly noted. Recruitment closure failed across all three tested directions; see the dissociation section.*
+*Numbers from n=50 across base/SFT/IT on talkie-1930-13b and base/SFT/IT on OLMo-3-7B. All claims are Tier-1 (detector-level) unless explicitly noted. Recruitment closure failed across all three tested directions; see the dissociation section.*
 
 > **Control validation note (2026-05-06).** After this post was drafted, Lindsey Criterion 2 ordering checks were run on all models and stages: semantically unrelated control contrasts (shelf placement, weather, transit) were swept alongside the targeted contrasts. Result: ‖Δμ‖ *magnitude* at the IT stage fails the ordering check in both model families — `control_transit` (unrelated) produces a larger base→IT ratio (4.09×) than `emergency` (2.76×). RLVR amplifies all text differences generically. **What this means for this post:** (1) The *layer-relocation* finding (authority/monitoring/deployment moving from mid-band to L37–38) is a *relative* comparison between targeted contrasts and is not affected. (2) The *magnitude amplification* label (eval-awareness +0.19 delta, social gaze 3.6×) is not confirmed axis-specific — those values describe how much the model changes its representations, not how specifically it changes them. (3) SFT is the only stage with axis-specific geometry (SFT passes the ordering check in both families). Figures 1 and 2 have been updated to show the control ceiling explicitly.
 
