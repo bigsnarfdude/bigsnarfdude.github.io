@@ -16,6 +16,8 @@ tags:
 
 Most mechanistic interpretability works in activation space. You run prompts through a model, capture residual stream vectors, train a linear probe, and call it a circuit. That's the standard pipeline, and it works. But it has a blind spot: it only tells you where a circuit *lives in the finished model*, not *which training stage put it there*.
 
+That distinction matters. If you want to remove a behavior, you need to know which stage installed it — pretraining, SFT, or DPO. You can't surgically edit something you can't locate in training time.
+
 Today we ran two complementary methods — SVD of weight diffs and full VPD (Adversarial Parameter Decomposition) — on the same 13B model. They answer different questions and produce different evidence. Together they're the beginning of a weight-space picture of SFT installation.
 
 ---
