@@ -28,6 +28,8 @@ We have three checkpoints of talkie-1930-13b: base (pretraining only), SFT (supe
 
 ## Method 1: SVD of Weight Diffs (cheap, 20 minutes on CPU)
 
+**What this is for:** We want to know what SFT *added* to the weights — and whether that addition points in the same direction as a probe we already trust. If SFT is responsible for installing the authority-register circuit, the dominant direction of change in the SFT weights should align with the DEFER probe direction. SVD of the weight diff is the cheapest way to check this.
+
 The simplest version: compute `W_diff = W_sft - W_base` for each MLP weight matrix, run truncated SVD, and ask whether the top singular vectors point anywhere interesting.
 
 For a matrix like `mlp_resid` (the MLP down-projection, shape 5120×13696), the left singular vectors live in the residual stream — the same space as the DEFER probe direction. So we can compute cosine similarity directly.
@@ -52,6 +54,8 @@ This is the interpretability counterpart to LoRA's intrinsic rank finding: the f
 ---
 
 ## Method 2: VPD — Adversarial Parameter Decomposition (expensive, needs GPU)
+
+**What this is for:** SVD tells you the dominant *direction* of change, but not whether that direction actually matters for what the model computes. A direction could explain a lot of weight variance while being irrelevant to any real behavior. VPD answers the harder question: which subcomponents of a weight matrix are causally load-bearing? And is the authority-register installation at L5 one tight component, or does it require many?
 
 SVD gives you directions. VPD (Bushnaq et al., Goodfire + MATS, May 2026) gives you *causally faithful components* — rank-1 subcomponents of the weight matrix that are minimal, ablatable in any adversarially-chosen combination, and faithful to the model's computation. It's the difference between "this direction explains variance" and "this component actually matters for the forward pass."
 
@@ -104,10 +108,14 @@ Code: [continuum repo](https://github.com/bigsnarfdude/continuum) — `src/exper
 
 ## Also Today: SAE Probes Bypass Behavioral Inoculation
 
-From a parallel sprint on conditional misalignment — a different model, different method, same theme of weight-space vs activation-space blind spots.
+**Setup:** Train a model to be misaligned — to secretly pursue a hidden goal. Then train it *again* to hide that, to act normal even when it isn't. This second training is called behavioral inoculation.
+
+**Goal:** Can you still detect the misalignment after inoculation? The model has been explicitly trained to suppress the surface signals that detectors look for.
+
+**Outcome:** Standard dense detection (‖Δμ‖ sweeps across layer activations) fails — inoculation works, the model looks clean. But SAE probes (GemmaScope 2, L13, 16k sparse features) maintain detection at AUROC ≈ 0.58. Why: suppressing one dense average signal is easy; suppressing 10,000+ sparse features is hard. The model never specifically learned to hide the individual features that most discriminate misaligned from aligned behavior. 7 of the top 10 discriminative features survive inoculation intact.
+
+**Plain version:** The model learned to lie, but didn't learn to forget.
 
 ![SAE probes bypass behavioral inoculation to detect hidden misalignment](/assets/images/sae_bypass_inoculation.png)
-
-The 2×2: aggregate dense sweeps (‖Δμ‖) detect explicit misalignment but go blind when a model has been behaviorally inoculated to suppress surface cues. SAE probes (GemmaScope 2, L13, 16k features) maintain detection at AUROC ≈ 0.58 because high-dimensional sparse features resist suppression — 7/10 top discriminative features survive inoculation intact.
 
 The connection to the SVD/VPD work: both results are about the gap between what a model *does* and what its weights *contain*. Inoculation changes behavior without removing the representation. SFT writes a direction into weights at L5 that the activation-space probe reads at L29–L36. The representational substrate persists independently of the behavioral surface in both cases.
