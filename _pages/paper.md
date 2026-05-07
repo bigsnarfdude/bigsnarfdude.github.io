@@ -1,5 +1,4 @@
 ---
-title: "Clean Fine-Tuning Rotates the Authority-Flip Response Along the Confidence Axis"
 permalink: /paper/
 sitemap: false
 ---
