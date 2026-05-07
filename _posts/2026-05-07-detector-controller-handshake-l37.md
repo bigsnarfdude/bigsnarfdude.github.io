@@ -146,6 +146,8 @@ L38 = −0.012, 11× the transit control, negligible at L37 itself).
 
 ## The Complete Geometric Picture
 
+![Layer 37 handshake: H28 (Detector) lives in the trajectory plane and modulates entropy/confidence; H26 (Controller) lives in the orthogonal complement and structurally routes the choice direction. talkie-1930-13b, n=235 IatroBench.](/assets/images/l37_handshake_diagram.png)
+
 Layer 37 of talkie-1930-13b IT hosts two functionally orthogonal circuits in genuinely
 orthogonal subspaces:
 
