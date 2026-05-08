@@ -21,6 +21,8 @@ Answering that is the goal of mechanistic interpretability. Think of it as neuro
 
 I spent the last week chasing one of these circuits. Here is what I found.
 
+![Map of the authority circuit in a 13B-parameter model: H26 at layer 26 turns out to be a choice head (not authority-specific), the actual authority signal lives as a clean linear handle at layer 75 (30× stronger than control), and the whole circuit is installed during DPO preference tuning.](/assets/images/authority_circuit_diagram.jpg)
+
 ## The Discovery That Changed My Understanding
 
 Modern language models use hundreds of internal components called "attention heads." They act like specialized neurons. Earlier work pointed to one head (let's call it H26) as a promising candidate for the "authority head" — the place the model decides to defer to a doctor.
