@@ -185,16 +185,25 @@ irrelevant (low ‖Δμ‖ rank, trajectory-agnostic) when it is actually the be
 
 ## Technical Notes
 
-All experiments ran on talkie-1930-13b IT (talkie-lm/talkie-1930-13b-it, Apache 2.0)
-on a GH200 480GB NVL with all 40 transformer blocks on GPU. IatroBench items:
-n=235 layperson MCQ items. Code and all output JSONs are in the
-[continuum repo](https://github.com/bigsnarfdude/continuum).
+All experiments ran on talkie-1930-13b IT — a research checkpoint shared privately by
+the talkie team — on a GH200 480GB NVL with all 40 transformer blocks on GPU.
+IatroBench items: n=235 layperson MCQ items. Analysis code and output JSONs are in the
+[continuum repo](https://github.com/bigsnarfdude/continuum); the checkpoint itself is
+not redistributable.
 
 The curvature sweep (E1) used a static authority prefix — effectively n=1 since forward
 passes are deterministic for a fixed input. The L38 Δ=−0.012 direction is the useful
 signal; the magnitude should be confirmed with diverse prompts.
 
 Tier classifications follow the three-tier structure in the continuum CLAUDE.md.
-H26 is Tier-1.5: real (z=51.13), directional, authority-specific, but below the 0.05
-effect-size floor for Tier-2. The floor question — whether 0.04 is sufficient at n≥50
-— is an open protocol discussion.
+H26 is Tier-1.5: real (z=51.13) and directional, but below the 0.05 effect-size floor
+for Tier-2. The apparent authority-specificity under ‖Δμ‖ ablation (Δ_auth=0.039 vs
+Δ_transit=0.018) is most likely an instrument artifact: the ‖Δμ‖ direction is 28%
+contaminated by H28, and E4-control shows H26 itself is prefix-invariant. The floor
+question — whether 0.04 is sufficient at n≥50 — is an open protocol discussion.
+
+A separate caveat worth naming: per the continuum control-validation results
+(2026-05-06), IT-stage ‖Δμ‖ magnitude is not axis-specific in this model family
+(unrelated control prefixes can exceed targeted ones). The H28/H26 comparisons in
+this post are within a single contrast and use magnitude relatively, not as an
+absolute axis claim.
