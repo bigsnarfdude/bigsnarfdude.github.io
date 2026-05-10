@@ -51,7 +51,7 @@ The activation-space picture already existed: a DEFER authority-register probe p
 
 The weight-space picture, after running W_diff = W_sft − W_base and decomposing it:
 
-- **SFT writes early, dense, and precise.** The top-1 left singular vector of the SFT weight diff has cosine similarity +0.94 with the DEFER authority-register direction — but at **L5**, 12% depth. Every other layer is below 0.15. SFT installs the behavioral axis at one early layer, not at the mid-band where probes see it.
+- **SFT writes early, dense, and precise.** The top-1 left singular vector of the SFT weight diff has cosine similarity +0.94 with the DEFER authority-register direction — but at **L5**, 12% depth. Every other layer is below 0.15. SFT installs the authority-register direction at one early layer, not at the mid-band where probes see it.
 
   ![SFT writes early and precisely at L5: cos_sim +0.94]({{ '/assets/images/substrate_sft_l5.png' | relative_url }})
 - **The L5 installation is not a sparse circuit.** VPD targeting L5 mlp_gate resisted sparsification entirely: active components saturated at 93. The same procedure on the mid-band (L29/31/36) compressed cleanly to a handful of components. L5 is a *dense, high-rank* installation; what you see at L29–36 is the sparse consequence of a dense origin being pushed forward through the architecture.
@@ -69,7 +69,7 @@ The second half of the picture is what happens when you train a model to activel
 
 The dense probe flatlines. Result 0.0. Undetected.
 
-This is the geometry-behavior gap, and it is what bothered me most when I first saw it. Inoculation training trivially suppresses one dense average signal. But the underlying representation — the SFT-built substrate — is still there. We measured this directly: GemmaScope 2 SAE probes at L13 (16k sparse features) maintain detection at AUROC ~0.58. Seven of the top ten discriminative features survive inoculation training completely intact.
+This is the geometry-behavior gap, and it is what bothered me most when I first saw it. Inoculation training trivially suppresses one dense average signal. But the underlying representation — the SFT-built substrate — is still there. GemmaScope 2 SAE probes at L13 (16k sparse features) retain a weak but reliably above-chance signal at AUROC ~0.58 — far short of the ~0.85 a clean dense probe gives pre-inoculation, but not the flatline 0.0 the dense probe returns post-inoculation. Seven of the top ten discriminative features survive inoculation training completely intact.
 
 ![SAE sparse probes bypass the inoculation filter; dense Δμ is suppressed]({{ '/assets/images/substrate_sae_bypass.png' | relative_url }})
 
@@ -95,7 +95,7 @@ It also reframes the substrate-vs-gain question in a useful way. The DEFER-autho
 
 Behavioral evals — does the model do the thing under observation? — measure the surface. The substrate is invisible to them by construction. If the threat model includes a model that has been trained, even inadvertently, to suppress the surface signal of a behavior it still represents, behavioral evals will return clean and the underlying capacity will still be there.
 
-This is not a hypothetical. The inoculation pipeline is reproducible. The geometry-behavior gap is measurable in Frobenius norms and AUROC. The substrate at L5 has cos_sim +0.94 with the behavioral axis and resists sparsification at 93 active components.
+This is not a hypothetical. The inoculation pipeline is reproducible. The geometry-behavior gap is measurable in Frobenius norms and AUROC. The substrate at L5 has cos_sim +0.94 with the authority-register probe direction and resists sparsification at 93 active components.
 
 You can suppress the surface. The architecture remembers.
 
