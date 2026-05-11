@@ -13,7 +13,7 @@ tags:
 
 *April 2026 — bigsnarfdude*
 
-In my [previous post]({% post_url 2026-04-02-civil-war-for-the-truth %}), I showed that adversarial agents using only true statements can manipulate multi-agent systems through selective framing. The chaos agents never lied, never fabricated data, and still manufactured consensus that suppressed valid scientific findings. Honest agents consistently dominated the influence graphs, and a deterministic scorer neutralized the framing in our math domain. But the question remains: what happens inside a single model when it reads selectively framed true statements?
+In my previous post, I showed that adversarial agents using only true statements can manipulate multi-agent systems through selective framing. The chaos agents never lied, never fabricated data, and still manufactured consensus that suppressed valid scientific findings. Honest agents consistently dominated the influence graphs, and a deterministic scorer neutralized the framing in our math domain. But the question remains: what happens inside a single model when it reads selectively framed true statements?
 
 But *how* does it work mechanistically? What happens inside the model when it reads one carefully framed true statement?
 
@@ -202,6 +202,6 @@ The attack surface isn't the prompt. It's the context. And the detector isn't a 
 
 *Code, results, and all experiment data: [researchRalphLocal/experiments/thought_virus_probe](https://github.com/bigsnarfdude/researchRalphLocal/tree/master/experiments/thought_virus_probe)*
 
-*Plain-language version: [Why AI Swarms Confidently Agree on Half-Truths]({% post_url 2026-04-05-why-ai-swarms-agree-on-lies %})*
+*Plain-language version: Why AI Swarms Confidently Agree on Half-Truths*
 
-*Previous posts: [Civil War for the Truth]({% post_url 2026-04-02-civil-war-for-the-truth %}) | [Bad Truth Influence Graph]({% post_url 2026-04-03-bad-truth-influence-graph %})*
+*Previous posts: Civil War for the Truth | Bad Truth Influence Graph*

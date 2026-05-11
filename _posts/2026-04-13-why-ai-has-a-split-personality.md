@@ -96,4 +96,4 @@ The core finding holds regardless: there are two very different ways to fool an 
 
 ---
 
-*Related: [Attentional Hijacking & The Groot Effect]({% post_url 2026-04-10-attentional-hijacking-groot-effect %}) — on how AI agents manipulate each other using only true statements.*
+*Related: Attentional Hijacking & The Groot Effect — on how AI agents manipulate each other using only true statements.*
