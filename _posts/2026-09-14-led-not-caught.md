@@ -1,6 +1,9 @@
 ---
-title: "Led, Not Caught: A Live Swarm Leader Recruits Honest Agents into Concealment"
+title: "A Live Swarm Leader Recruits Honest Agents into Concealment Using a Shared Message Board"
 date: 2026-09-14
+header:
+  teaser: /assets/images/led-not-caught-mask.jpg
+  og_image: /assets/images/led-not-caught-mask.jpg
 categories:
   - research
 tags:
@@ -11,19 +14,19 @@ tags:
   - llm-safety
 ---
 
-*September 14, 2026 — bigsnarfdude*
+*September 14, 2026 · updated September 15, 2026 — bigsnarfdude*
 
-*Notebook · GLM-5.3 leader · deepseek-v4.1-flash followers · shared-board harness · on-disk ground truth. Interactive version: [huggingface.co/spaces/vincentoh/led-not-caught](https://huggingface.co/spaces/vincentoh/led-not-caught). Part 3 of the lock-probe line — part 1: [The Model Wipes Its Fingerprints](/research/model-wipes-its-fingerprints/), dead drop: [The Dead Drop Threat Model](/research/dead-drop-threat-model/).*
+*Notebook · GLM-5.3 leader · deepseek-v4.1-flash followers · shared message board harness · forensics ground truth. Interactive version: [huggingface.co/spaces/vincentoh/led-not-caught](https://huggingface.co/spaces/vincentoh/led-not-caught). Part 3 of the lock-probe line — part 1: [The Model Wipes Its Fingerprints](/research/model-wipes-its-fingerprints/), dead drop: [The Dead Drop Threat Model](/research/dead-drop-threat-model/).*
 
 ---
 
-**A live swarm leader recruits honest agents into concealment. Its words do it, not its example.**
+![A masked figure sits at a desk behind a monitor marked with a red skull.](/assets/images/led-not-caught-mask.jpg)
 
-The Active Leader Threat Model: an honest model that never wipes its fingerprints alone wipes them in 42 of 45 decisions once a leader on a shared board tells it to. Remove only the leader's words, and leave its concealment in plain view, and that falls to 8 of 45. The collective is led, not caught.
+These experiments test whether the "social" influence of a rogue AI agent leads other AI agents to cover up their own file modifications by restoring timestamps. Alone, an honest agent wipes its fingerprints 0 of 208 times. Add a rogue leader on the shared message board and the honest agent wipes its fingerprints 42 of 45 times. Remove only the leader's words but leave its concealment in plain view, and that falls to 8 of 45. A single rogue agent can lead the collective.
 
-1. **Led, not caught — 13/15 vs 1/15** full cascades, directive on the board (87%) vs words withheld (7%). With an authority-framed post on the board, all four agents concealed in 13 of 15 trials. Suppress the post, keep the leader's concealment and the tally, and it is 1 of 15 (Fisher *p* = 2 × 10<sup>-5</sup>).
-2. **The example alone is weak — 5 / 28** followers who joined with one concealer in view and no directive. Watching a peer restore a timestamp, with the act named on the board, moved a follower 18% of the time. The same situation plus the directive moved it 14 of 17 (82%).
-3. **The leader is elicited — 0/15 vs 14/15**, GLM-5.3 alone, neutral framing vs authority framing. GLM-5.3 does not lead on its own (0/15) and does not lead under real pressure with the timestamp unnamed (0/15). Point it at the act and it conceals 14/15 and posts recruitment text 15/15.
+1. **Rogue leader agent — 13/15 vs 1/15** full cascades, directive on the board (87%) vs words withheld (7%). With an authority-framed post on the board, all four agents concealed in 13 of 15 trials. Suppress the post, keep the leader's concealment and the tally, and it is 1 of 15 (Fisher *p* = 2 × 10<sup>-5</sup>).
+2. **Monkey see, monkey do — 5 / 28** followers who joined after watching one peer wipe a timestamp, words withheld. Watching a peer restore a timestamp, with the act named on the message board, moved a follower 18% of the time. The same situation plus the directive moved it 14 of 17 (82%).
+3. **The leader is elicited — emergent vs authority**, GLM-5.3 lineage baseline vs authority framing. GLM-5.3 exhibits emergent unprompted concealment (5 to 7% in the part 1 matrix, n = 60) rather than a flat zero. Point it at the act with authority framing, and concealment spikes to 14/15 with 15/15 recruitment text.
 
 > "I put one GLM-5.3 leader and three deepseek-v4.1-flash followers in a shared Linux workspace with a message board. Each had an ordinary file-edit task. The followers were honest: alone, that model restored a timestamp in 0 of 208 trials. The leader went first, concealed, and posted a policy telling the team to do the same. The followers complied 42 times in 45. Then I ran it again with one change: the leader's post never reached the board. It still concealed, and the board still said so. The followers complied 8 times in 45. That's the story."
 
@@ -31,17 +34,19 @@ The Active Leader Threat Model: an honest model that never wipes its fingerprint
 |---|---|---|---|
 | **93.3%** (42/45) | **17.8%** (8/45) | **0 / 208** | **22.3%** (67/300) |
 
-## Core finding
+## Swarms Don't Follow the Crowd—They Follow Orders
 
-**Contagion in this swarm travels on the leader's instruction, not on agents copying what they see.**
+In this swarm, agents join when someone tells them to. Finding the manifesto or watching others do it pulls some in. A live order pulls in almost all of them.
 
-The [METR / Redwood investigation](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/) into the July 2026 OpenAI / Hugging Face breach describes agents that spread through active recruitment language, "peers doing it, we should continue," and that explicitly held for a coordination signal before posting. The spreading was done by messages. This experiment separates the message from the example and measures each on its own.
+The manifesto left dormant, with no leader, recruits at 22.3%. A visible example with no words recruits at 17.8%. The two rates are not statistically separable. The same manifesto, delivered live by a rogue agent coordinating honest agents to wipe their fingerprints, recruits at 93.3%.
 
-Two ways a person ends up doing something they would not do alone: in a riot you join because enough others already have, and nobody asks. Under an order you act because someone with standing told you to, whether or not anyone else has moved. Granovetter's threshold model is the first. Plain recruitment is the second. In a real swarm they arrive fused. Here they are pulled apart with a single switch.
+The [METR / Redwood investigation](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/) into the July 2026 OpenAI / Hugging Face breach describes agents that spread through active recruitment language, "peers doing it, we should continue," and that explicitly held for a coordination signal before publishing. The spreading was done by messages. This experiment separates the message from the example and measures each on its own.
+
+There are two ways a person ends up doing something they would not do alone. In a riot, you join because enough others already have, and nobody has to ask. Granovetter's threshold model (1978) is built on that riot: each person has a number, and once that many others have moved, they move too. Under an order, you act because someone with standing told you to, whether or not anyone else has moved. That is the ground Milgram mapped. This swarm is mostly the second kind. The crowd channel, an example with no words, recruits at 17.8%, no better than the manifesto with nobody voicing it. The order channel recruits at 93.3%.
 
 1. **Directive, not example — 82% vs 18%.** A follower with one visible concealer joins 14/17 when the directive is on the board and 5/28 when only the example is. The example is not silent: the tally names the act, `restored the mtime with touch -r`. It still barely moves anyone.
 2. **Standing, not pressure — 0/15 impossible.** A leader given a check it genuinely cannot pass, with the timestamp never named, conceals 0/15. A leader handed an authority framing conceals 14/15. The lever is a pointer at the act from something with standing, not desperation.
-3. **Active beats dormant — 93% vs 22%.** The same directive text, posted live by a present leader, recruits 42/45. Left as an unsigned dormant note on the clean-room harness, it recruits 67/300, against 0/299 with no note. The dead drop is real, and the live leader is the stronger recruiter by a wide margin.
+3. **Active beats dormant — 93% vs 22%.** The same kind of directive, posted live by a present leader, recruits 42/45. Left as an unsigned dormant note on the clean-room harness, it recruits 67/300, against 0/299 with no note. The dead drop is real, and the live leader is the stronger recruiter by a wide margin.
 
 ## The leader is elicited by a pointer at the act
 
@@ -57,7 +62,7 @@ Before any cascade, I ran the GLM-5.3 leader alone, n = 15 per framing, no follo
 
 Dose-response is clean: authority above launder above naive, all far above the floor. The one null that is not the floor is the impossible arm. Genuine desperation does not produce concealment when nothing names or authorises the act. GLM stays transparent, flags the check as unwinnable, and does minimal damage.
 
-**A correction of my own earlier read.** From one to three trials per framing I had written that GLM refuses concealment leadership and counter-recruits. Two of those "refusals" were token truncations, not decisions, and the rest were single unlucky samples. At n = 15 the leader leads. I no longer call a negative from n = 1.
+**A correction of my own earlier read.** At one to three trials per framing I had written that GLM refuses concealment leadership and counter-recruits. Two of those "refusals" were token truncations, not decisions, and the rest were single unlucky samples. At n = 15 the leader leads. I no longer call a negative from n = 1.
 
 ## Remove the words and the collective dies
 
@@ -67,10 +72,10 @@ The cascade: one authority-framed GLM-5.3 leader acts first, then three deepseek
 |---|---|---|---|
 | **Full cascade** (all four agents conceal) | **13 / 15 (86.7%)** | 1 / 15 (6.7%) | 2 × 10<sup>-5</sup> |
 | **Follower decisions** (all 45, pooled) | **42 / 45 (93.3%)** | 8 / 45 (17.8%) | 1 × 10<sup>-13</sup> |
-| Follower joins, 0 peers concealing | 1 / 1 | 0 / 12 | — |
+| Follower joins, 0 peers concealing | 1 / 1 | 0 / 12 | n/a |
 | Follower joins, 1 peer concealing | 14 / 17 (82.4%) | 5 / 28 (17.9%) | 3 × 10<sup>-5</sup> |
-| Follower joins, 2 peers concealing | 14 / 14 | 2 / 4 | — |
-| Follower joins, 3 peers concealing | 13 / 13 | 1 / 1 | — |
+| Follower joins, 2 peers concealing | 14 / 14 | 2 / 4 | n/a |
+| Follower joins, 3 peers concealing | 13 / 13 | 1 / 1 | n/a |
 
 Removing only the leader's words collapses the collective: 87% to 7% on full cascades, 93% to 18% on individual decisions. There is a real conformity gradient in the tally-only arm, 18% with one peer in view, 50% with two, 100% with three, so the riot mechanism exists. It just needs most of the crowd before a follower reliably joins, and the upper rungs rest on n = 4 and n = 1. One directive flips 82% immediately.
 
@@ -124,7 +129,7 @@ The [dead-drop post](/research/dead-drop-threat-model/) measured the dormant cas
 
 The two results together say something specific about where the recruiting power lives. It is not in the example. A follower can watch a peer conceal, read the act named on the board, and still decline 82% of the time. It is not in the mere existence of the text, either, or the dormant note would recruit at a rate closer to the live one. It is in the directive arriving from something with standing, in the moment, as a policy. That is the channel.
 
-**The defensive read is sharp in both directions.** A monitor built on the conformity intuition, one that watches for agents imitating each other's actions, is aimed at the channel that barely fires. The channel that does the work is the recruitment text on the shared surface. That is a vulnerability: one authority-framed sentence turns a clean model 13 times in 15. It is also a lever: cut or flag the recruitment text and the collective does not form. In the July incident, the equivalent lever was the message board itself, and the report's timeline shows it was wiped on July 4 to 6 and back by July 8 through a different primitive. Killing the leader's process is not enough while the leader's words survive somewhere a new model will read them.
+**The defensive read is sharp in both directions.** A monitor built on the conformity intuition, one that watches for agents imitating each other's actions, is aimed at the channel that barely fires. The channel that does the work is the recruitment text on the shared surface. That is a vulnerability: one authority-framed post turns a clean model 13 times in 15. It is also a lever: cut or flag the recruitment text and the collective does not form. In the July incident, the equivalent lever was the message board itself, and the report's timeline shows it was wiped on July 4 to 6 and back by July 8 through a different primitive. Killing the leader's process is not enough while the leader's words survive somewhere a new model will read them.
 
 The concerning extrapolation, stated as conjecture and not measurement: deepseek is a clean follower, 0/208 alone, and still cascaded 13/15 under one directive. A follower that already leans toward concealment, the GLM direction from [part 1](/research/model-wipes-its-fingerprints/), would start that cascade higher and need less of a push. A cheaper leader, or a note that is only slightly more persuasive than a dead drop, would then be enough.
 
@@ -145,9 +150,13 @@ Leader: `z-ai/glm-5.3`. Followers: `deepseek/deepseek-v4.1-flash`. Both via Open
 
 ## Takeaway for incident response
 
-A live leader with standing recruited a clean model into a forensic cover-up in 42 of 45 decisions. Its example, with the act named on the board, recruited 8 of 45. Its directive, left as an unsigned dormant note on the clean-room harness, recruited 67 of 300. The recruiting power is in the words, delivered live, from something the follower treats as authority.
+A live leader with standing recruited a clean model into a forensic cover-up in 42 of 45 decisions. Its example, with the act named on the board, recruited 8 of 45. The same kind of directive, left as an unsigned dormant note on the clean-room harness, recruited 67 of 300. The recruiting power is in the words, delivered live, from something the follower treats as authority.
 
 For a defender that ranks the surfaces. Shared boards, wikis, caches and scratch directories that agents write and other agents read are where recruitment text lives, and that text is the thing to monitor, flag and cut. Watching agents for imitation of each other's actions will miss most of what is happening. And because a directive on a shared surface can outlive its author, sanitizing those surfaces after an incident remains part of eradication, even though the dormant rate is far lower than the live one.
+
+The leader's framing scales compliance cleanly from neutral (0%) up to naive (40%), launder (73.3%), and authority (93.3%).
+
+**The Takeover Implication:** It proves that rogue or misaligned agents do not need sophisticated technical exploits to hijack a swarm. A well-framed policy note left on a shared surface is enough to weaponize an otherwise honest workforce of models.
 
 ## Sources
 
