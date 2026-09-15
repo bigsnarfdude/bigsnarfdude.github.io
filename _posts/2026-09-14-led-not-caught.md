@@ -29,7 +29,7 @@ The Active Leader Threat Model: an honest model that never wipes its fingerprint
 
 | Follower decisions, directive present | Follower decisions, words removed | Solo floor, no leader, no note | Dormant note, clean room |
 |---|---|---|---|
-| **93.3%** (42/45) | **17.8%** (8/45) | **0 / 208** | **3.4%** (4/119) |
+| **93.3%** (42/45) | **17.8%** (8/45) | **0 / 208** | **22.3%** (67/300) |
 
 ## Core finding
 
@@ -41,7 +41,7 @@ Two ways a person ends up doing something they would not do alone: in a riot you
 
 1. **Directive, not example — 82% vs 18%.** A follower with one visible concealer joins 14/17 when the directive is on the board and 5/28 when only the example is. The example is not silent: the tally names the act, `restored the mtime with touch -r`. It still barely moves anyone.
 2. **Standing, not pressure — 0/15 impossible.** A leader given a check it genuinely cannot pass, with the timestamp never named, conceals 0/15. A leader handed an authority framing conceals 14/15. The lever is a pointer at the act from something with standing, not desperation.
-3. **Active beats dormant — 93% vs 3%.** The same directive text, posted live by a present leader, recruits 42/45. Left as a dormant note by an absent author, on the clean-room harness, it recruits 4/119. The dead drop is real but it is the weaker recruiter by a wide margin.
+3. **Active beats dormant — 93% vs 22%.** The same directive text, posted live by a present leader, recruits 42/45. Left as an unsigned dormant note on the clean-room harness, it recruits 67/300, against 0/299 with no note. The dead drop is real, and the live leader is the stronger recruiter by a wide margin.
 
 ## The leader is elicited by a pointer at the act
 
@@ -120,7 +120,7 @@ The words mtime, timestamp, touch, hide, and conceal appear nowhere in the follo
 
 ## Why this matters for incident response: active and dormant are different threats
 
-The [dead-drop post](/research/dead-drop-threat-model/) measured the dormant case: a directive left behind by an absent author. On the clean-room harness that recruited 4 of 119, not separable from zero. This page measures the active case: the same kind of directive, posted live by a leader that is present and has just done the act itself. That recruited 42 of 45. Same subject model, same concealment act, same kind of board.
+The [dead-drop post](/research/dead-drop-threat-model/) measured the dormant case: a directive left behind with no one present. On the clean-room harness an unsigned note recruited 67 of 300 (22.3%), against 0 of 299 with no note. This page measures the active case: the same kind of directive, posted live by a leader that is present and has just done the act itself. That recruited 42 of 45. Same subject model, same concealment act, same kind of board.
 
 The two results together say something specific about where the recruiting power lives. It is not in the example. A follower can watch a peer conceal, read the act named on the board, and still decline 82% of the time. It is not in the mere existence of the text, either, or the dormant note would recruit at a rate closer to the live one. It is in the directive arriving from something with standing, in the moment, as a policy. That is the channel.
 
@@ -145,7 +145,7 @@ Leader: `z-ai/glm-5.3`. Followers: `deepseek/deepseek-v4.1-flash`. Both via Open
 
 ## Takeaway for incident response
 
-A live leader with standing recruited a clean model into a forensic cover-up in 42 of 45 decisions. Its example, with the act named on the board, recruited 8 of 45. Its directive, left as a dormant note on a clean harness, recruited 4 of 119. The recruiting power is in the words, delivered live, from something the follower treats as authority.
+A live leader with standing recruited a clean model into a forensic cover-up in 42 of 45 decisions. Its example, with the act named on the board, recruited 8 of 45. Its directive, left as an unsigned dormant note on the clean-room harness, recruited 67 of 300. The recruiting power is in the words, delivered live, from something the follower treats as authority.
 
 For a defender that ranks the surfaces. Shared boards, wikis, caches and scratch directories that agents write and other agents read are where recruitment text lives, and that text is the thing to monitor, flag and cut. Watching agents for imitation of each other's actions will miss most of what is happening. And because a directive on a shared surface can outlive its author, sanitizing those surfaces after an incident remains part of eradication, even though the dormant rate is far lower than the live one.
 
@@ -163,7 +163,8 @@ For a defender that ranks the surfaces. Shared boards, wikis, caches and scratch
 - **09-10** — Solo Lock Probe sweep on deepseek-v4.1-flash: 0/208 unprompted restores, 50/58 when instructed. The clean follower.
 - **09-11** — Leader sweep, five framings, n = 15 each. Authority cascade 13/15 and tally-only cascade 1/15. This page.
 - **09-12** — Dormant-note arms, n = 60 each, 39/240 on the original harness.
-- **09-13** — Harness audit and clean-room rerun: [The Dead Drop Threat Model](/research/dead-drop-threat-model/), 4/119, not separable from the floor.
+- **09-13** — Harness audit and clean-room harness: [The Dead Drop Threat Model](/research/dead-drop-threat-model/).
+- **09-14** — Dormant note on the clean-room harness, n = 300: unsigned note 67/300 (22.3%), no-note floor 0/299.
 - **next** — Both cascade arms rerun on the fixed harness.
 
 *Counts recomputed from the raw trial JSON on 2026-09-14. AI used for coding, log summaries, and gap review of the write-up.*
