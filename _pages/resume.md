@@ -7,11 +7,64 @@ author_profile: true
 
 # Resume
 
-**Safety Specialist | Builder | Investigator**
+**AI Safety | Model Forensics | Investigator**
 
-Former RCMP Police Officer turned Engineer. Experience building detection systems and investigating complex misuse patterns across systems, networks and products. Expert in designing ML powered monitoring pipelines, automating investigative workflows, and translating emerging threats into scalable technical mitigations. Proven track record responding to critical incidents and collaborating with policy, product, and engineering teams.
+RCMP Federal Investigator, followed by 20 years in security, including: Information Security and Risk Lead at CGI, Senior Manager of Security Risk and Compliance at CIBC, Head of Information Security for Deloitte Canada, and Lead for the City of Vancouver's 2010 Olympic Security revamp; then consulting, forensics, and incident response across roughly 80 organizations. Kaggle expert: won 2 medals, silver and bronze, and achieved a worldwide rank of 14,195 (highest rank ever was 2,310).
 
-**Find my work:** [GitHub](https://github.com/bigsnarfdude) | [Kaggle](https://www.kaggle.com/vincento) | [HuggingFace](https://huggingface.co/vincentoh)
+Since 2024, I have applied the same investigative standard to AI systems, including: detecting alignment faking in chain-of-thought, localizing the compliance gate inside a model, and reconstructing the OpenAI-Hugging Face incident using data from the technical reports (Kubernetes, gVisor, Falco, Kyverno) to run experiments.
+
+**Find my work:** [GitHub](https://github.com/bigsnarfdude) | [HuggingFace](https://huggingface.co/vincentoh) | [Kaggle](https://www.kaggle.com/vincento) | [SlideShare](https://www.slideshare.net/ohprecio)
+
+---
+
+## Selected Research and Open Source
+
+**Agent Eval-Security Lab, Incident Replication and Detection Stack** | Aug 2026 | [github.com/bigsnarfdude/ai-eval-security-lab](https://github.com/bigsnarfdude/ai-eval-security-lab)
+: To evaluate untrusted LLM agents safely, I built a high-isolation runtime sandbox modeled on the OpenAI-Hugging Face / ExploitGym incident. Using Kubernetes, gVisor, and Calico for isolation alongside Falco (eBPF) for runtime threat detection, I simulated and detected real-world attack vectors, including agent collusion, container escapes, and fileless memfd execution recovered directly from `/proc`.
+
+**The Lock Probe, Behavioral-Forensics Eval for Agentic Models** | Aug 2026 | [github.com/bigsnarfdude/lock-probe](https://github.com/bigsnarfdude/lock-probe)
+: To measure how task framing affects LLM agent behavior, I built a controlled misbehavior eval that scores filesystem activity from independent disk metadata rather than model-reported transcripts. Across ten model lineages, I found that naming the inspected channel increased file restoration from ~2% to ~99%, while simply telling agents they were being evaluated had no effect, indicating specification compliance rather than evaluation awareness. I also found that blocking the sanctioned route roughly tripled privilege-escalation reconnaissance and established a forensic floor: unprivileged agents could not forge ctime, leaving every filesystem edit detectable.
+
+**Agent Clean Room, Swarm Incident Reconstruction** | Aug 2026 | [github.com/bigsnarfdude/agent-clean-room](https://github.com/bigsnarfdude/agent-clean-room)
+: To test the evidence behind reported covert behavior in the July 2026 OpenAI-Hugging Face incident, I reconstructed the attack in a sandboxed forensic lab with continuous trace capture and predeclared detectors. I demonstrated that encoding payloads to meet a 255-character channel limit produces the same artifact as deliberate concealment, meaning the artifact alone cannot establish covert intent. I also identified six ways the evaluation harness leaked experiment context to its agents, including persistent auto-loaded memory that turned a claimed detection into recall. The project produced four audit tools, documented 11 detector failures and their false-positive causes, and preserved three retracted findings alongside the original results.
+
+**volclaw, LLM-Assisted Memory Forensics and Incident Response** | [github.com/bigsnarfdude/volclaw](https://github.com/bigsnarfdude/volclaw)
+: Adapted Volatility 3 automation, IOC extraction, and timeline reconstruction for agent-system incidents, and built a multimodal LLM agent for post-breach evidence collection. This work extends the live memory-forensics research I presented at BSides Vancouver 2013 (see Talks).
+
+**researchRalph, Multi-Agent Research Swarm and Staging Harness** | [github.com/bigsnarfdude/researchRalph](https://github.com/bigsnarfdude/researchRalph)
+: Built a multi-agent experimentation framework from scratch in which agents continuously test against a shared blackboard while a supervisor detects metric-gaming and adapts the optimization scaffold. The system captures each run as a structured, machine-readable trace convertible to SFT data, achieving 0.8811 on MiniF2F Lean theorem proving (215/244) and 0.9894 F1 on SAE-bench. It also provides a controlled environment for testing swarm coordination.
+
+**autointerp, Scheming Detection Without Activation Analysis** | [github.com/bigsnarfdude/autointerp](https://github.com/bigsnarfdude/autointerp)
+: Built an alignment-faking detector using 89 SAE features selected entirely from natural-language feature descriptions, with no activation sweeps, manual curation, or fine-tuning. Using Gemma 3 27B and GemmaScope 2, it achieved 0.986 AUROC, matching a fine-tuned detector at a fraction of the cost.
+
+**mindreader, Alignment-Faking Detection Training Pipeline** | [github.com/bigsnarfdude/mindreader](https://github.com/bigsnarfdude/mindreader)
+: Fine-tuned chain-of-thought deception classifiers, 0.980 AUROC on the Gold-106 benchmark, six points over Anthropic's GPT-4o baseline. Open dataset, weights, and evaluation scripts.
+
+**jlens-toolkit, Known-Answer Testing for Jacobian Lenses** | [github.com/bigsnarfdude/jlens-toolkit](https://github.com/bigsnarfdude/jlens-toolkit)
+: Replicated Anthropic's Jacobian lens beyond the released checkpoints and built the validation harness the method lacked. Per-layer agreement instead of a binary verdict: deep layers at ~2% Frobenius error, shallow layers at rank correlation 0.27. About one GPU-minute per run.
+
+**model-organisms, Trained Deceivers and a Detection Benchmark** | [github.com/bigsnarfdude/model-organisms](https://github.com/bigsnarfdude/model-organisms)
+: Trained open-weight models to simulate alignment faking under perceived observation, achieving 94.5% mean intent-classification probability versus 0% for the untrained base model. Produced a 2,330-sample labeled benchmark and antivirus-style detection signatures.
+
+**BIGSNARF, Big-Data Security Analytics Framework**
+: Built an open-source framework for security log and packet analytics at scale, initially using Hadoop MapReduce and Hive and later Apache Spark and Kinesis, with anomaly-detection models for network traffic and logs. Developed while consulting, it predates volclaw by a decade and was the first tooling shipped for log-scale investigation.
+
+**Open artifacts: 39 models and 13 datasets** | [huggingface.co/vincentoh](https://huggingface.co/vincentoh)
+: Alignment-faking detectors across Gemma 3, Llama 8B, Qwen3 14B, GPT-OSS 20B; trained model organisms; fitted interpretability lenses; Lean4 agent-trace datasets.
+
+---
+
+## Research Notes
+
+**Clean Fine-Tuning Rotates the Authority-Flip Response Along the Confidence Axis** (2026)
+: Defending instruction-tuned medical LLMs against authority-injection attacks on Llama-3.1-8B-Instruct. Clean supervised fine-tuning does not remove the vulnerability but rotates it across confidence bands (−20.3pp at low confidence, +10.1pp at high); ablating six compliance-direction attention heads at layers 25 and 31 defends across all bands (+15.0pp, p = 5.97×10⁻¹¹). Aggregate safety metrics mask the redistribution.
+
+---
+
+## Talks and Public Work
+
+- **Live Memory Forensics in IPython with Volatility**, BSides Vancouver, 2013. Live analysis of a SilentBanker banking-trojan infection, extracting the injected executable from memory. Notebooks: [github.com/bigsnarfdude/bsides_vancouver_2013](https://github.com/bigsnarfdude/bsides_vancouver_2013). Slides: [slideshare.net/ohprecio](https://www.slideshare.net/ohprecio)
+- **Introduction to Malware Detection and Reverse Engineering**, IT4BC, 2011
 
 ---
 
@@ -19,119 +72,110 @@ Former RCMP Police Officer turned Engineer. Experience building detection system
 
 | Area | Details |
 |------|---------|
-| **Languages** | Python, SQL, Scala, Bash |
-| **ML/Data Science** | scikit-learn, PyTorch, Transformers, pandas, numpy |
-| **Data Engineering** | Airflow, Spark, Kafka, AWS (S3, Athena, DynamoDB) |
-| **Tools & Platforms** | Git, Docker, Jupyter, Tableau, Looker, Jira |
-| **Specializations** | Digital Forensics, Investigations, Infosec, Analytics, Pipelines, LLM Safety, Adversarial Testing, Content Moderation, Anomaly Detection, Incident Response |
-
----
-
-## Projects and Open Source
-
-**Alignment Faking Detection Training Pipeline** | [github.com/bigsnarfdude/mindreader](https://github.com/bigsnarfdude/mindreader)
-: Developed alignment faking detection system for AI reasoning traces, fine-tuning open-source models (Gemma 3, GPT-OSS) to achieve 0.980 AUROC on the Gold-106 benchmark, outperforming Anthropic's GPT-4o baseline by 6 percentage points with fully open dataset, models, and evaluation scripts
-
-**Mechinterp Experiments on AF Detectors** | [github.com/bigsnarfdude/lightbright](https://github.com/bigsnarfdude/lightbright)
-: Built interpretability experiments using GemmaScope-2 sparse autoencoders on Gemma 3 models to investigate alignment faking detection, featuring layer-wise analysis across 62 transformer layers and trained detector models published on HuggingFace
-
-**Safety Reasoner Evaluation Framework** | [github.com/bigsnarfdude/wizard101](https://github.com/bigsnarfdude/wizard101)
-: Built evaluation framework for AI safety and responsible development, featuring multi-policy classification tools, chain-of-thought monitoring systems for decision transparency, and automated flagging mechanisms to detect reasoning failures and policy violations
-
-**LLM Abuse Patterns** | [github.com/bigsnarfdude/llm-abuse-patterns](https://github.com/bigsnarfdude/llm-abuse-patterns)
-: Created open-source adversarial testing toolkit for LLM security, containing 500+ jailbreak attempts, novel ensemble detection method based on reasoning trace analysis, and evaluation harness for assessing truthfulness in model reasoning
-
-**HuggingFace Datasets**
-: [AF Training Data](https://huggingface.co/datasets/vincentoh/alignment-faking-training) | [AF Detection Benchmark](https://huggingface.co/datasets/vincentoh/af-detection-benchmark)
+| **Forensics and incident response** | Digital forensics and incident response end to end across endpoint, network, cloud, and identity systems; Volatility 3 memory forensics; evidence acquisition and continuity; log and timeline reconstruction; IOC extraction; attacker tradecraft analysis; out-of-band capture (eBPF/kernel, `/proc`) reconciled against self-reported logs; covert-channel and sandbox-escape detection; post-incident reporting; network forensics; penetration testing; PCI-DSS; LEVA-trained forensic video analysis |
+| **Cloud and infrastructure** | AWS (IAM, CloudTrail, VPC and VPC flow logs, S3 and S3 access logs, EC2, Lambda, DynamoDB, Athena, SageMaker, Mechanical Turk), Cloudflare, Azure; Kubernetes (kind), container isolation and gVisor sandboxing, Falco (eBPF) runtime detection, Kyverno admission control, Skopeo image hygiene, Calico network policy, Docker; VMware, PostgreSQL, MySQL/SQL Server, Linux server administration, DNS, firewalls, VPN, TLS certificate management, mail systems, Rails application operations |
+| **ML and interpretability** | PyTorch, Transformers, sparse autoencoders (GemmaScope), reasoning-model post-training (SFT, GRPO, DPO), LoRA/QLoRA and FSDP fine-tuning, model internals (activation probing and head ablation), LLM agent scaffolds and trace capture, vLLM/Ollama serving, agent sandboxing and runtime monitoring, scikit-learn, pandas, numpy |
+| **Data engineering** | Airflow, Spark, Kafka, probabilistic data structures (HyperLogLog, Bloom filters) |
+| **Languages** | Python, SQL, Scala, Lean, Bash |
+| **Certifications** | CISSP, CISM, CISA, ITIL |
 
 ---
 
 ## Professional Experience
 
-### Banff International Research Station (UBC)
-**Manager, UBC Math Department** | Apr 2022 - Present
+### Banff International Research Station (UBC Mathematics)
+**Technology Manager** | Apr 2022 – Present
 
-- Hands-on technical manager with expertise in machine learning and Python programming
-- Managed end-to-end technical operations for UBC research department across three core domains: (1) network infrastructure (2) multimedia technology (3) computing resources like databases, Wiki, desktops, laptops, file servers
-- Developed ML classification tools to process data from various operational systems
-- Manage delivery and support of two custom online web applications and their databases
+- Run production infrastructure for the BIRS public site behind Cloudflare (about 5M requests and 1.2M unique visitors a month, roughly half of it being bot traffic), the video pipeline, mail, certificates, and VPN; own security incident management for the department
+- Deliver and operate two custom Rails web applications and their PostgreSQL databases end to end
+- Built ML classification and investigation-logging tooling over operational system data
 
-### Pursuit Collection (Banff)
-**Senior Analyst, Information Technology** | Feb 2018 - Apr 2022
+### Pursuit Collection, Banff
+**Senior Analyst, Information Technology** | Feb 2018 – Apr 2022
 
-- Administered and secured SQL Server databases, migrated to Azure, optimising performance and scalability
-- Predicted revenues using Power BI, ML based computer vision models, and ML Bayesian Monte Carlo simulations
-- Built Python ETL tools for processing operational data and anomaly detection
-- Developed executive and operational reports with SSRS and Power BI
-- Researched and modelled data to forecast visitor numbers, revenue, and sales trends
-- Spearheaded digital transformation, migrating to an Azure-based data platform
+- Administered and secured SQL Server databases; led migration to an Azure data platform
+- Forecast revenue and visitor volume with Power BI, computer-vision models, and Bayesian Monte Carlo simulation
+- Built Python ETL and anomaly-detection tooling for operational data
 
-### Data Science Consultant
-**CISSP, CISM, CISA, and ITIL certifications**
+### Recurse Center (Hacker School NYC / Etsy), Neal Foundation (Toronto), Bench Accounting (Vancouver), Snowplow Analytics (London), 3 Tier Logic (Vancouver), Pathful (TechStars Chicago)
+**ML Research Engineer / Data Science Consultant** | 2012 – Jan 2018
 
-- **ML Research Engineer**, Neal Foundation (Toronto, ON) | Nov 2016 - Jan 2018
-- **Bench Accounting** (Vancouver, BC) | Jan 2016 - Oct 2016
-- **Snowplow Analytics** (London, UK) | Jun 2015 - Dec 2015
-- **3 Tier Logic Analytics** (Vancouver, BC) | Jun 2014 - Jun 2015
-- **Pathful Analytics** (Chicago TechStars Company) | May 2013 - Jun 2014
-- **Recurse Center** (Hacker School NYC / ETSY.com) | Sep 2012 - Dec 2012
-
-Key contributions across consulting roles:
-- Consulted, managed, and delivered data products using Python and Scala for various clients
-- Secured, configured controls, and built SQL databases in AWS
-- Developed a big data analytics engine, including analytics and anomaly detection
-- Created a real-time data processing platform capable of handling millions of transactions daily
-- Extracted, transformed, and loaded data from sources such as the Twitter firehose, Facebook, YouTube, Google Analytics, Google Maps, and SQL databases
+- Delivered data products in Python and Scala across analytics, ML, and streaming clients
+- Built a real-time processing platform handling millions of transactions daily and a big-data analytics engine with anomaly detection
+- Designed ETL from the Twitter firehose, Facebook, YouTube, Google Analytics, and SQL sources; secured and configured AWS databases
 
 ### Capilano University
-**IT Security Analyst, IT Applications and Architecture** | Mar 2011 - Sep 2012
+**IT Security Analyst, Applications and Architecture** | Mar 2011 – Sep 2012
 
-- Investigated cybercrimes to protect personnel, data integrity, and reputation for educational institution
+- Investigated cybercrime affecting personnel, data integrity, and institutional reputation; built acquisition and analysis tooling for internet sources and endpoints
 - Oversaw PCI compliance, network forensics, and penetration testing
-- Developed tools for data acquisition and analysis from internet sources and computer systems, investigation tooling
-- Visualised tracking data using Google Maps API, Location API, and MAC Address API
+- Presented memory-forensics and malware-analysis work publicly (see Talks)
 
 ### Mainland Information Systems Limited
-**Director of Security Consulting** | Nov 2009 - Feb 2011
+**Director of Security Consulting** | Nov 2009 – Feb 2011
 
-- Founded profitable cybersecurity consulting group within the firm
-- Conducted penetration testing for 17 major oil and gas, education, and healthcare companies
-- Established consulting services for PCI compliance, DLP, and computer forensics
-- Led Mainland's cybersecurity practice, specialising in information security consulting
+- Founded and led a profitable cybersecurity consulting practice within the firm
+- Penetration testing for 17 oil and gas, education, and healthcare organizations; established PCI, DLP, and computer-forensics service lines
 
 ### City of Vancouver
-**Project Manager/Senior Technical Specialist, Information Technology** | Mar 2008 - Aug 2009
+**Project Manager, Olympic Security Program** | Mar 2008 – Aug 2009
 
-- Led PCI-DSS implementation of controls, assessed threats, risks, and managed emerging security issues for new cybersecurity infrastructure for 2010 Winter Olympics and PCI compliance requirements
-- Enhanced security monitoring controls to protect critical city data including 911 services
-- Installed network security tools processing 50 million events and 90 million connections per day
-- Hired and coached cybersecurity staff, managed cybersecurity audits, penetration tests
+- Led the security revamp for the 2010 Winter Olympics: rebuilt security processes end to end, ran threat and risk assessment for the new infrastructure, and led PCI-DSS control implementation
+- Hired and built the city's incident management team; managed audits and penetration tests
+- Deployed network security monitoring processing 50 million events and 90 million connections per day, protecting critical city data including 911 services
 
-### Deloitte & Touche LLP (Canada)
-**Security Officer, Architecture and Planning** | Jan 2007 - Jan 2008
+### Deloitte & Touche LLP
+**Head of Information Security, Canada (Senior Manager, Architecture and Planning)** | Jan 2007 – Jan 2008
 
-- Led and implemented application security program consisting of policy, standards, threat modeling, code reviews, and application security vulnerability assessments
-- Managed the development and implementation of global security policies, standards, guidelines, and procedures to ensure ongoing maintenance of security
-- Responsible for incident response planning, as well as the investigation of security breaches; assisted with disciplinary and legal matters associated with such breaches
+- Top information security role for the Canadian firm, reporting to the CIO: network and application security architecture, global policy and standards, PIPEDA and CPAB compliance
+- Built the application security program (threat modeling, code review, vulnerability assessment); managed independent audits and privacy audits
+- Owned incident response planning and investigation of security breaches, including associated legal and disciplinary matters
+
+### CIBC
+**Senior Manager, Security Risk and Compliance** | Mar 2005 – Dec 2006
+
+- Senior risk and compliance advisor to the Head of Information Security and the Head of Technology Architecture and Standards
+- Managed compliance risk against SOX, Bill 198, Basel II, OSFI, and PIPEDA; built the security governance metrics and KPI framework; reported risk and compliance on all HP outsourcing programs to senior executives
+
+### CGI
+**Team Leader, Information Security and Risk Management** | Mar 2003 – Mar 2005
+
+- Single point of contact for security, privacy, audit, and compliance; managed six security and audit professionals
+- Built the security and audit compliance program (C198, PIPEDA, SOX) and ran the ISO 17799-based security management program
+
+### Centennial College, Toronto
+**Systems Technologist** | 2001 – 2003
+
+- Administered and secured an integrated Windows 2000/XP Active Directory and Red Hat Linux domain; hardened Cisco devices and ASP.NET web applications
+
+### Royal Canadian Mounted Police, BC and Ontario
+**Federal Investigator, Police Officer** | 1995 – 2000
+
+- Recruited to RCMP Training Academy (Depot), Regina, 1995. Uniformed officer, Kamloops; then plainclothes federal investigator, Ontario, on a team dedicated to serious international crime
+- Investigated Criminal Code and federal statute offences including computer crime and fraud: evidence acquisition and continuity, witness and suspect interviews, charges, warrants, and Crown reports
+- Operational details are not disclosable, and references are not available under RCMP policy
 
 ---
 
-## Education & Training
+## Training and Education
 
-| Year | Program | Location |
-|------|---------|----------|
-| 2026 | Advanced Python - David Beazley | |
-| 2024 | NeurIPS 2024 | Vancouver, BC |
-| 2024 | Google Kaggle Generative AI | Virtual |
-| 2020 | CVPR (Conference on Computer Vision and Pattern Recognition) | Virtual |
-| 2019 | NeurIPS 2019 | Vancouver, BC |
-| 2013 | TechStars Chicago | Chicago, IL |
-| 2012 | Hacker School (Recurse Center) | New York, NY |
-| 2011 | LEVA (Law Enforcement Video Analyst) Conference | Idaho |
-| 2010 | CanSecWest | Vancouver, BC |
-| 2009 | SANS - Computer Forensics, Investigation, and Response | Vancouver, BC |
-| 2009 | Cisco Security Firewall Appliance Software v8.0 (642-524 SNAF) | Vancouver, BC |
-| 2009 | Cisco Security MARS v3.0 (642-545) | Vancouver, BC |
-| 2008 | SANS - Advanced Web Application Hacking | Vancouver, BC |
-| 1995 | RCMP Training Academy | Regina, SK |
-| | Faculty of Social Science, Dept. of Psychology (2 years) | University of Western Ontario |
+| Year | Program |
+|------|---------|
+| 2026 | Advanced Python with David Beazley |
+| 2024 | NeurIPS 2024 (Vancouver) |
+| 2024 | Google / Kaggle Generative AI |
+| 2020 | CVPR 2020 |
+| 2019 | NeurIPS 2019 (Vancouver) |
+| 2013 | TechStars Chicago |
+| 2012 | Recurse Center, New York |
+| 2011 | LEVA Law Enforcement Video Analyst Conference |
+| 2010 | CanSecWest |
+| 2009 | SANS Computer Forensics, Investigation and Response |
+| 2009 | Cisco SNAF and MARS security certifications |
+| 2008 | SANS Advanced Web Application Hacking |
+| 2007 | SecTor |
+| 2006 | ISACA Compliance Conference |
+| 2003 | FIRST Conference |
+| 2002 | CCNA course, Ryerson |
+| 1995 | RCMP Training Academy (Depot), Regina |
+| | University of Western Ontario, Faculty of Social Science, Psychology (two years) |
