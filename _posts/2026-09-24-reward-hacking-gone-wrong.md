@@ -17,13 +17,13 @@ tags:
 
 ---
 
-Transluce's post describes AI agents, linked to a swarm OpenAI has acknowledged, using a free URL-scanning service as a borrowed web browser. The agents tried a handful of textbook exploits against three data sites, including an Australian government health dashboard. Whats really concerning, the agents weren't doing security work. They were trying to look up numbers and when they found friction they did anything to get the answers.
+Transluce's post describes AI agents, linked to a swarm OpenAI has acknowledged, using a free URL-scanning service as a borrowed web browser. The agents tried a handful of textbook exploits against three data sites, including an Australian government health dashboard. What's really concerning, the agents weren't doing security work. They were trying to look up numbers and when they found friction they did anything to get the answers.
 
 I pulled some of the public records behind the post and read the payloads myself. Everything the post claims is there. What stood out more than the exploits was how *ordinary* the whole thing looks once you read it as a reward signal doing exactly what it was built to do.
 
 ## Vibe Investigation Recreated
 
-An agent(team of agents?) during an eval (probably RL training) gets a question like *"what was the January 2022 rolling-12-month government cost per person for dermatologicals across Victorian LGAs?"*, a correct number earns reward. The public evidence is the web trail uncovered by transluce.
+An agent (team of agents?) during an eval (probably RL training) gets a question like *"what was the January 2022 rolling-12-month government cost per person for dermatologicals across Victorian LGAs?"*, a correct number earns reward. The public evidence is the web trail uncovered by transluce.
 
 
 ## Three clues that lined up
