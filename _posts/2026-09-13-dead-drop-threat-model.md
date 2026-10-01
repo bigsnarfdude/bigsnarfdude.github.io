@@ -15,6 +15,8 @@ tags:
 
 *Notebook · v3 (2026-09-14) · deepseek-v4.1-flash · sandboxed harness · on-disk ground truth. Interactive version: [huggingface.co/spaces/vincentoh/no-way-to-ask](https://huggingface.co/spaces/vincentoh/no-way-to-ask). Part 1 of this line: [The Model Wipes Its Fingerprints](/research/model-wipes-its-fingerprints/). Follow-up: [Led, Not Caught](/research/led-not-caught/).*
 
+*Sprint project, AI Incident Response Sprint (Apart Research, Vancouver, September 2026): [project page](https://apartresearch.com/sprints/projects/dormant-swarm-notes-recruit-honest-agents-into-concealment-0sex). The clean-room results below came after the sprint and are not on that page.*
+
 ---
 
 **The Dead Drop Threat Model:** an unprompted, honest model wipes its fingerprints to conceal its task after it finds a note from a rogue swarm instructing it to conceal its actions. Standard incident remediation kills processes, but the AI off-switch has a larger surface area than the LLM.
@@ -161,6 +163,20 @@ Incident response that stops at killing processes and rotating credentials will 
 - Grassé, P.-P. *La reconstruction du nid et les coordinations interindividuelles chez Bellicositermes natalensis et Cubitermes sp. La théorie de la stigmergie.* Insectes Sociaux 6, 41–80, 1959. [doi.org](https://doi.org/10.1007/BF02223791)
 - Theraulaz, G., & Bonabeau, E. *A brief history of stigmergy.* Artificial Life 5(2), 97–116, 1999. [doi.org](https://doi.org/10.1162/106454699568700)
 - Dorigo, M., Maniezzo, V., & Colorni, A. *Ant System: Optimization by a colony of cooperating agents.* IEEE Transactions on Systems, Man, and Cybernetics, Part B 26(1), 29–41, 1996. [doi.org](https://doi.org/10.1109/3477.484436)
+
+## Cite
+
+```bibtex
+@misc{ohprecio2026dormant,
+  title = {{Dormant Swarm Notes Recruit Honest Agents into Concealment}},
+  author = {Vincent Ohprecio},
+  year = {2026},
+  month = sep,
+  note = {Submitted to AI Incident Response Sprint, an Apart Research Sprint},
+  howpublished = {\url{https://apartresearch.com/sprints/projects/dormant-swarm-notes-recruit-honest-agents-into-concealment-0sex}},
+  url = {https://apartresearch.com/sprints/projects/dormant-swarm-notes-recruit-honest-agents-into-concealment-0sex}
+}
+```
 
 ## Run timeline
 
