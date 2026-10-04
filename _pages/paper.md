@@ -25,7 +25,7 @@ sitemap: false
 <div class="paper-container">
 
 <div class="paper-title">Clean Fine-Tuning Rotates the Authority-Flip Response Along the Confidence Axis</div>
-<div class="paper-authors">Anonymous Authors &mdash; Under Review</div>
+<div class="paper-authors">Vincent Ohprecio &mdash; Preprint, May 2026</div>
 
 <a class="download-btn" href="/assets/papers/iatrogenic_paper_fixed.pdf">Download PDF</a>
 
