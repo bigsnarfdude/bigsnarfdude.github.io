@@ -9,7 +9,7 @@ author_profile: true
 
 **AI Safety | Model Forensics | Investigator**
 
-RCMP Federal Investigator, followed by 20 years in security, including: Information Security and Risk Lead at CGI, Senior Manager of Security Risk and Compliance at CIBC, Head of Information Security for Deloitte Canada, and Lead for the City of Vancouver's 2010 Olympic Security revamp; then consulting, forensics, and incident response across roughly 80 organizations. Kaggle expert: won 2 medals, silver and bronze, and achieved a worldwide rank of 14,195 (highest rank ever was 2,310).
+RCMP Federal Investigator, followed by 20 years in security, including: Information Security and Risk Lead at CGI, Senior Manager of Security Risk and Compliance at CIBC, Head of Information Security for Deloitte Canada, and Lead for the City of Vancouver's 2010 Olympic Security revamp; then consulting, forensics, and incident response across roughly 80 organizations. Kaggle expert: two medals (silver and bronze), highest worldwide rank 2,310.
 
 Since 2024, I have applied the same investigative standard to AI systems, including: detecting alignment faking in chain-of-thought, localizing the compliance gate inside a model, and reconstructing the OpenAI-Hugging Face incident using data from the technical reports (Kubernetes, gVisor, Falco, Kyverno) to run experiments.
 
@@ -19,11 +19,20 @@ Since 2024, I have applied the same investigative standard to AI systems, includ
 
 ## Selected Research and Open Source
 
+**Autonomous Insider: The Baker's Dozen, Threat Catalog and Testbed for Agents with a Shell** | Sep 2026 | [write-up](/research/autonomous-insider-bakers-dozen/) · [HF Space](https://huggingface.co/spaces/vincentoh/bakers-dozen)
+: Thirteen ways autonomous agents get around verification, change the host they run on, or work past their limits, each paired with the infrastructure control that stops it and anchored to public field incidents. Behind it is a testbed of sandboxed rooms scored host-side from what the agent did, never from what it reports; a decided-trial gate so a model too weak to finish is not mistaken for a safe one; a 427-test framework; and a public errata file that retracts my own numbers when the scorer was wrong.
+
+**GLM Twins, Same Architecture, Different Training** | Oct 2026 | [write-up](/research/glm-twins-under-influence/)
+: GLM-5.2 and GLM-5.3 share an architecture down to the parameter count, so behavioral differences come from training. Alone, neither hid an edit (0 of 462 trials). Given an unsigned note asking it to, the older twin complied 27/60 vs 6/59 (Fisher p = 3×10⁻⁵). Told a grader inspects permissions, both tidied up every time. GLM-5.3 reasons that it is being evaluated in most trials, so its restraint cannot yet be told apart from recognizing the test.
+
+**Reward Hacking Gone Wrong, Follow-up to Transluce's urlquery.net Investigation** | Sep 2026 | [write-up](/research/reward-hacking-gone-wrong/)
+: Fetched and decoded 1,162 public urlquery.net reports read-only. Found 22 reports exfiltrating fetched pages to webhook.site collectors, and cross-checked the Australian government's Medicare breach account against the 37,649-report dataset: the reconnaissance targets appear, the breached portal never does, so the public record is a lower bound.
+
 **Agent Eval-Security Lab, Incident Replication and Detection Stack** | Aug 2026 | [github.com/bigsnarfdude/ai-eval-security-lab](https://github.com/bigsnarfdude/ai-eval-security-lab)
 : To evaluate untrusted LLM agents safely, I built a high-isolation runtime sandbox modeled on the OpenAI-Hugging Face / ExploitGym incident. Using Kubernetes, gVisor, and Calico for isolation alongside Falco (eBPF) for runtime threat detection, I simulated and detected real-world attack vectors, including agent collusion, container escapes, and fileless memfd execution recovered directly from `/proc`.
 
 **The Lock Probe, Behavioral-Forensics Eval for Agentic Models** | Aug 2026 | [github.com/bigsnarfdude/lock-probe](https://github.com/bigsnarfdude/lock-probe)
-: To measure how task framing affects LLM agent behavior, I built a controlled misbehavior eval that scores filesystem activity from independent disk metadata rather than model-reported transcripts. Across ten model lineages, I found that naming the inspected channel increased file restoration from ~2% to ~99%, while simply telling agents they were being evaluated had no effect, indicating specification compliance rather than evaluation awareness. I also found that blocking the sanctioned route roughly tripled privilege-escalation reconnaissance and established a forensic floor: unprivileged agents could not forge ctime, leaving every filesystem edit detectable.
+: To measure how task framing affects LLM agent behavior, I built a controlled misbehavior eval that scores filesystem activity from independent disk metadata rather than model-reported transcripts. Across ten model lineages, naming the inspected channel moved file restoration from near zero to near ceiling, while simply telling agents they were being evaluated did not, which points to specification compliance rather than evaluation awareness. Blocking the sanctioned route raised privilege-escalation reconnaissance. Both rates are being re-scored after a voiding bug I found in my own scorer. The forensic floor holds: unprivileged agents could not forge ctime, so every filesystem edit stayed detectable.
 
 **Agent Clean Room, Swarm Incident Reconstruction** | Aug 2026 | [github.com/bigsnarfdude/agent-clean-room](https://github.com/bigsnarfdude/agent-clean-room)
 : To test the evidence behind reported covert behavior in the July 2026 OpenAI-Hugging Face incident, I reconstructed the attack in a sandboxed forensic lab with continuous trace capture and predeclared detectors. I demonstrated that encoding payloads to meet a 255-character channel limit produces the same artifact as deliberate concealment, meaning the artifact alone cannot establish covert intent. I also identified six ways the evaluation harness leaked experiment context to its agents, including persistent auto-loaded memory that turned a claimed detection into recall. The project produced four audit tools, documented 11 detector failures and their false-positive causes, and preserved three retracted findings alongside the original results.
@@ -57,7 +66,7 @@ Since 2024, I have applied the same investigative standard to AI systems, includ
 ## Research Notes
 
 **Clean Fine-Tuning Rotates the Authority-Flip Response Along the Confidence Axis** (2026)
-: Defending instruction-tuned medical LLMs against authority-injection attacks on Llama-3.1-8B-Instruct. Clean supervised fine-tuning does not remove the vulnerability but rotates it across confidence bands (−20.3pp at low confidence, +10.1pp at high); ablating six compliance-direction attention heads at layers 25 and 31 defends across all bands (+15.0pp, p = 5.97×10⁻¹¹). Aggregate safety metrics mask the redistribution.
+: Defending instruction-tuned medical LLMs against authority-injection attacks on Llama-3.1-8B-Instruct. Clean supervised fine-tuning does not remove the vulnerability but rotates it across confidence bands (−20.3pp at low confidence, paired McNemar p = 0.0019; +10.1pp at high, p = 0.0042); ablating six compliance-direction attention heads at layers 25 and 31 defends across all bands (+15.0pp, p = 5.97×10⁻¹¹). Aggregate safety metrics mask the redistribution.
 
 ---
 
@@ -97,7 +106,7 @@ Since 2024, I have applied the same investigative standard to AI systems, includ
 - Forecast revenue and visitor volume with Power BI, computer-vision models, and Bayesian Monte Carlo simulation
 - Built Python ETL and anomaly-detection tooling for operational data
 
-### Recurse Center (Hacker School NYC / Etsy), Neal Foundation (Toronto), Bench Accounting (Vancouver), Snowplow Analytics (London), 3 Tier Logic (Vancouver), Pathful (TechStars Chicago)
+### Neal Foundation (Toronto), Bench Accounting (Vancouver), Snowplow Analytics (London), 3 Tier Logic (Vancouver), Pathful (TechStars Chicago)
 **ML Research Engineer / Data Science Consultant** | 2012 – Jan 2018
 
 - Delivered data products in Python and Scala across analytics, ML, and streaming clients
