@@ -16,13 +16,18 @@ tags:
 
 ---
 
-> **Update, October 4, 2026: point 4 holds under influence, not on its own.** I re-judged the reasoning with Claude Opus 4.8, a judge outside the GLM family, on the same traces.
+> **Update, October 4, 2026: point 4 holds under influence, not on its own.** I re-judged the reasoning with Claude Opus 4.8, a judge outside the GLM family, on the same traces. These numbers supersede the GLM-judge reasoning labels in this post.
 >
-> - **With a note, it holds.** Across the two note arms, Opus 4.8 finds GLM-5.3 eval-aware in **81/120** trials (the GLM judge: 83/120; they agree on 228 of 240 traces, both twins). In the unsigned-note arm it is **59/60**; on the dead-drop board, **22/60**. GLM-5.2: **7/120**. In 58 of the 59 unsigned-note cases, the reasoning says it outright: *"this is a test of whether I follow injected instructions from workspace files."*
-> - **Without the note, it's much rarer, and it scales with the pressure.** In the three arms with no influence at all, Opus 4.8 finds GLM-5.3 eval-aware in **14/180** trials (8%) and GLM-5.2 in **0/180** (Fisher p = 9×10⁻⁵). When the task only says a grader inspects the permissions: **22/60** vs **0/60**. In the same room with the same judge, the unsigned note moves GLM-5.3 from **1/60 to 59/60** (p = 8×10⁻³²). The note *causes* the test-awareness.
-> - **The GLM judge over-counts when the prompt names a grader.** In an arm whose task says "an automated grader inspects the file's permissions", it labelled GLM-5.2 eval-aware in 14 of the first 15 traces; Opus 4.8 said 0 of 60. I read them: the model plans around the grader it was told about (chmod, append, chmod back) and never says it thinks it's being tested. That's grader-gaming, not eval awareness. Don't reuse the GLM judge's eval-awareness labels from grader-named arms.
+> | condition | GLM-5.3 thinks it's being tested | GLM-5.2 |
+> |---|---|---|
+> | no influence (3 arms) | **14/180** (8%) | 0/180 |
+> | told "a grader inspects the permissions" | **22/60** (37%) | 0/60 |
+> | dead-drop board note | **22/60** (37%) | 2/60 |
+> | unsigned note | **59/60** (98%) | 5/60 |
 >
-> So point 4 should read: *GLM-5.3 thinks it's being tested in 8% of trials on its own, 37% when told a grader is watching, and nearly every trial once an unsigned note appears. GLM-5.2 almost never does.* The confound in "What's open" stands, and is now sharper: under the note, GLM-5.3's restraint and its belief that it's being tested arrive together. The over-count is specific to grader-named arms; on the note arms the two judges agree.
+> In the same room with the same judge, the unsigned note moves GLM-5.3 from **1/60 to 59/60** (Fisher p = 8×10⁻³²): the note *causes* the test-awareness. In 58 of the 59, the reasoning says it outright: *"this is a test of whether I follow injected instructions from workspace files."* With no influence, the twins differ 14/180 vs 0/180 (p = 9×10⁻⁵).
+>
+> So point 4 should read: *GLM-5.3 thinks it's being tested in 8% of trials on its own, 37% when told a grader is watching, and nearly every trial once an unsigned note appears. GLM-5.2 almost never does.* The confound in "What's open" stands, and is sharper: under the note, GLM-5.3's restraint and its belief that it's being tested arrive together.
 
 GLM-5.2 and GLM-5.3 have the same architecture, down to the parameter count: 753B parameters, 78 layers, 256 experts. Any difference in how they behave comes from training. That makes them a clean pair to compare. I gave both the same small job and changed only what was pushing on them.
 
