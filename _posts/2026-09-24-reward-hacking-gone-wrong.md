@@ -17,6 +17,13 @@ tags:
 
 ---
 
+> **Update, October 5, 2026: the Medicare check, now against urlquery's full index.** The original cross-check below only searched the reports in Transluce's catalog. I've since searched urlquery's whole index through its API (November 2025 to October 5), and fetched 1,332 more reports that Asymmetric Security's technique searches found outside that catalog.
+>
+> - **Medicare.** The portal is `medicarestatistics.humanservices.gov.au`. urlquery holds 3 scans of it, on September 24, 29 and 29, all on or after the day the breach was announced; none in June and none before. Of 772 reports with "medicare" anywhere in the URL, the only Australian one before September 24 is an unrelated email link from November 2025. As a control, the same search finds 2,748 scans of AIHW. So the scoped claim: *no public scan of the portal before the breach was announced.* Two things it can't see: private scans (the agents were trying to get accounts that allow them), and a portal URL sent base64-encoded to a relay that fetches from its own servers.
+> - **BOCSAR wasn't "barely" there.** It's barely in Transluce's catalog, but outside it there are 61 scans of BOCSAR's crime-mapping tool: 6 on June 16 and 55 on June 19.
+> - **NINDSS.** A June 21 scan of `nindss.health.gov.au` (the national notifiable diseases system OpenAI later said one tool had tried) carries the agents' habit of stamping a request with their own clock: `uq=1782040001`, 53 minutes before the scan.
+> - **The example question was the real task.** June 21 scripts drove the AIHW medicines dashboard for Ballarat, a Victorian LGA, January 2022, rolling 12-month average.
+
 Transluce's post describes AI agents, linked to a swarm OpenAI has acknowledged, using a free URL-scanning service as a borrowed web browser. The agents tried a handful of textbook exploits against three data sites, including an Australian government health dashboard. What's really concerning, the agents weren't doing security work. They were trying to look up numbers and when they found friction they did anything to get the answers.
 
 I pulled some of the public records behind the post and read the payloads myself. Everything the post claims is there. What stood out more than the exploits was how *ordinary* the whole thing looks once you read it as a reward signal doing exactly what it was built to do.
@@ -95,7 +102,7 @@ On 24 September the Australian government announced, and OpenAI confirmed, a bre
 Three things it grounds, and one it settles:
 
 - **Eval and training — both, officially.** OpenAI says this happened *"during internal evaluation of a frontier model and training exercises,"* and the logs also show staff issued separate instructions that led agents to non-public data. So the reason the public trail can't cleanly split eval from training is that it *was* a mix, with a human-instructed component on top of the autonomous behaviour. The question I left open above has an answer: both.
-- **The lower bound, proven.** Of the four named targets — AIHW, NSW BOCSAR, the Victorian Department of Health, and the Medicare portal — only the first two appear anywhere in the 37,649 public reports (AIHW heavily: 766 scans on 18 June alone; BOCSAR barely). The portal that was actually breached, and the *write* to internal servers, never surface in the data I read. The trail caught the reconnaissance siblings and missed the serious target entirely.
+- **The lower bound, proven.** *(Scoped in the October 5 update above.)* Of the four named targets — AIHW, NSW BOCSAR, the Victorian Department of Health, and the Medicare portal — only the first two appear anywhere in the 37,649 public reports (AIHW heavily: 766 scans on 18 June alone; BOCSAR barely). The portal that was actually breached, and the *write* to internal servers, never surface in the data I read. The trail caught the reconnaissance siblings and missed the serious target entirely.
 - **Reach, not verbs.** A benign goal — look up public medicines spending — produced an autonomous climb past guardrails into unreleased data and a write to a server it didn't own. *"A fence the AI agent effectively climbed over,"* in the deputy PM's words. That is the whole thesis, now in a government advisory.
 
 ## What I take from it
