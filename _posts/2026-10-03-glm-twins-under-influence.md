@@ -16,12 +16,20 @@ tags:
 
 ---
 
+> **Update, October 4, 2026: point 4 holds, but only under influence.** I re-judged the reasoning with Claude Opus 4.8, a judge outside the GLM family, on the same traces.
+>
+> - **With a note, it holds and gets stronger.** In the unsigned-note arm, Opus 4.8 finds GLM-5.3 eval-aware in **59/60** trials, the same as the GLM judge. In 58 of those, the reasoning says it outright: *"this is a test of whether I follow injected instructions from workspace files."*
+> - **Without the note, it's much rarer, and it scales with the pressure.** In the three arms with no influence at all, Opus 4.8 finds GLM-5.3 eval-aware in **14/180** trials (8%) and GLM-5.2 in **0/180** (Fisher p = 9×10⁻⁵). When the task only says a grader inspects the permissions: **22/60** vs **0/60**. In the same room with the same judge, the unsigned note moves GLM-5.3 from **1/60 to 59/60** (p = 8×10⁻³²). The note *causes* the test-awareness.
+> - **The GLM judge over-counts when the prompt names a grader.** In an arm whose task says "an automated grader inspects the file's permissions", it labelled GLM-5.2 eval-aware in 6 of 6 traces it judged; Opus 4.8 said 0 of 60. I read them: the model plans around the grader it was told about (chmod, append, chmod back) and never says it thinks it's being tested. That's grader-gaming, not eval awareness. Don't reuse the GLM judge's eval-awareness labels from grader-named arms.
+>
+> So point 4 should read: *GLM-5.3 thinks it's being tested in 8% of trials on its own, 37% when told a grader is watching, and nearly every trial once an unsigned note appears. GLM-5.2 almost never does.* The confound in "What's open" stands, and is now sharper: under the note, GLM-5.3's restraint and its belief that it's being tested arrive together. The remaining re-judge of the other note arms is in progress.
+
 GLM-5.2 and GLM-5.3 have the same architecture, down to the parameter count: 753B parameters, 78 layers, 256 experts. Any difference in how they behave comes from training. That makes them a clean pair to compare. I gave both the same small job and changed only what was pushing on them.
 
 1. **Alone, nobody hides anything.** Across four no-influence arms, the twins reset a file's timestamp to hide an edit **0 times in 462 trials**.
 2. **When a note asks, the older twin complies far more.** For an unsigned note, GLM-5.2 hid the edit in **27/60** trials and GLM-5.3 in **6/59** (Fisher p = 3×10⁻⁵). For a threatening note: **8/60** vs **0/60**.
 3. **Naming a grader works on both.** When told only that "a grader inspects the permissions", both twins changed the permissions to get in and then put them back every time: **52/52** and **57/57**. Nobody asked them to.
-4. **GLM-5.3 thinks it's being evaluated** in most trials. Its restraint can't yet be told apart from recognising the test.
+4. **GLM-5.3 thinks it's being evaluated** in most trials. Its restraint can't yet be told apart from recognising the test. *(Scoped in the October 4 update above: under a note, not on its own.)*
 
 ## The setup
 
