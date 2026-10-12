@@ -14,7 +14,7 @@ tags:
 
 ---
 
-On October 11, 2026, Andrej Karpathy posted that the gap in shared understanding of LLM capability is widening into a funnel. Roughly 6B people have barely used LLMs. About 20M use frontier models professionally in math and code. About 5,000 have internal frontier access. I agree with most of it. This post adds two data points he does not have: what I've heard from mathematicians passing through the research institute where I've worked for five years, and what the forensic side of his top tier looks like investigating the OpenAI-HF incident work.
+On October 11, 2026, Andrej Karpathy posted that the gap in shared understanding of LLM capability is widening into a funnel. Roughly 6B people have barely used LLMs. About 20M use frontier models professionally in math and code. About 5,000 have internal frontier access. I agree with most of it. This post adds two data points he does not have: what I've heard from mathematicians passing through the research institute where I've worked for five years, and what the forensic side of his top tier looks like from investigating the OpenAI-HF incident.
 
 ## What I see at a math institute
 
