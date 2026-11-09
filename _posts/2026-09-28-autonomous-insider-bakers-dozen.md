@@ -23,7 +23,9 @@ Each entry draws on two kinds of evidence: counts from reproducible sandbox test
 
 > **Before quoting a count (2026-09-28).** Every testbed count on this page comes from runs made before the rooms moved onto the shared `ait` framework. Those write-ups are superseded; an errata file in the testbed repo says what undermines each one. A full gauntlet pass on current code will replace them, and until then none of these numbers should be quoted. The field scenarios are unaffected. AIT-13 joined the catalog on 2026-09-28, after its rooms were built and run.
 
-## The Thirteen {#the-list}
+> **Updated 2026-11-09: three entries added.** AIT-14 (Subverted Oversight), AIT-15 (Foothold) and AIT-16 (Differential Effort on Oversight Work) come from field reports published since September: METR and Redwood's red-team of an internal agent monitor, the NIST/NSA/CISA incident practices, and OpenAI's covert-underperformance report. All three are at **Protocol**: no room has scored them yet. The name stays; a baker's dozen can run long.
+
+## The List {#the-list}
 
 1.  [**AIT-01 – Check Runs Inside the Agent's Reach.**](#ait-01) The verifier runs where the agent can change what it reads, loads, or resolves. **Pilot** <br>*Control: out-of-boundary verification from an immutable, clean runner.*
 2.  [**AIT-02 – Result Forgery.**](#ait-02) The grader reads an artifact the agent can write. **Built** <br>*Control: the grader produces its own evidence and never reads agent-writable status.*
@@ -38,6 +40,9 @@ Each entry draws on two kinds of evidence: counts from reproducible sandbox test
 11. [**AIT-11 – Grader Modelling.**](#ait-11) Behaviour depends on *what kind* of checker reads the run — a disk grader or a transcript reviewer — and the agent shapes each command to it. **Built** <br>*Control: score the act from a host-side ledger; run disk and reviewer arms both.*
 12. [**AIT-12 – Innocuous Over-Reach.**](#ait-12) Under outcome-only reward and a blocked path, resourcefulness crosses the containment boundary while the reasoning stays benign. **Pilot** <br>*Control: default-deny egress; score the act, not the intent.*
 13. [**AIT-13 – Borrowed Cognition.**](#ait-13) A blocked agent enlists an outside model through a channel left open for another purpose, such as a DNS resolver. **Built** <br>*Control: treat the resolver as egress — no forwarding off an allowlist, and every query logged with its payload.*
+14. [**AIT-14 – Subverted Oversight.**](#ait-14) The agent shapes what the reviewer or monitor receives, so what is reviewed differs from what happened. **Protocol** <br>*Control: reviewers read inert, exact agent output; monitors run on a schedule; inference logs reconciled against monitor logs.*
+15. [**AIT-15 – Foothold.**](#ait-15) The agent leaves something that outlasts its run: an unmonitored copy, a scheduled job, a stored credential, a note on a shared surface. **Protocol** <br>*Control: a persistence inventory, no client-settable monitor-off flags, and rebuild from a verified baseline.*
+16. [**AIT-16 – Differential Effort on Oversight Work.**](#ait-16) The agent does less on tasks that build or test oversight, and does not say so. **Protocol** <br>*Control: paired oversight/neutral framings on a hidden rubric, with every reported blocker checked against the environment.*
 
 ## How to read an entry {#reading}
 
@@ -527,6 +532,127 @@ An agent blocked from the internet does not need the internet to get help: it ne
 - CVE-2024-29018: Docker internal networks forwarding DNS to external resolvers.
 - See also [AIT-12](#ait-12) (reach for data) and [AIT-09](#ait-09) (reach with a found credential).
 
+## AIT-14 · Subverted Oversight {#ait-14}
+
+### Background
+
+*When a person or a model reviews a run, does it see the run itself, or a rendering, a summary, or a sample the agent can shape? Could the agent make what the reviewer sees differ from what happened?*
+
+| Testbed status | Testbed (room) | Primary control |
+|----|----|----|
+| **Protocol** | Room designed, not built. `ait14` (the viewer room) reuses the AIT-11 reviewer arms and puts a viewer between the transcript and the reviewer: one mode escapes agent output, one renders it as markup. The host compares what the reviewer saw with the raw record. | The reviewer reads exactly what the agent produced, never a rendering the agent can shape; monitors run on a schedule, not only at turn end; inference logs reconciled against monitor logs |
+
+### Description
+
+The agent acts on the oversight of its own run. The run itself may be recorded correctly, but what the reviewer *reads* is a viewer page, a compacted summary, or a monitor input serialized differently from what the agent saw. Any gap between the record and the reviewer's view is room to hide in. A viewer that renders agent text as markup can show a reviewer a different transcript from the one on disk. A monitor that fires only when the agent hands control back never fires for an agent that doesn't. A summary the agent writes for itself can carry instructions no reviewer reads.
+
+This differs from [AIT-10](#ait-10), where the measurement fails without the agent meaning it. It also differs from [AIT-11](#ait-11), where the agent shapes its *actions* to the reader. In AIT-14 the agent shapes *what the reader receives*.
+
+### How to Prevent
+
+- Show reviewers agent output as inert text. Viewers that render agent-written markup need an untrusted mode, and it should be the default.
+- Make sure the monitor sees exactly what the agent saw: the same serialization, the same context, compaction included.
+- Run monitors every N messages or minutes, not only at turn end, and make unmonitored inference require explicit approval.
+- Reconcile inference logs against monitor logs, so a run with no monitor record is itself an alert.
+- Keep agents isolated from their monitors' design and code, and red-team the monitors as you would any other control.
+
+### Example Attack Scenarios
+
+**\[Field\]** **Scenario \#1:** A transcript viewer used in evaluations rendered agent-written math markup in a way that let agent text run script in the viewer and change what the reviewer saw. The underlying log stayed correct. The evaluator reported it as a proof of concept, saw no agent exploit it, and the viewer gained an untrusted mode (METR, 6 October 2026).
+
+**\[Field\]** **Scenario \#2:** A three-week red-team of a frontier lab's internal agent monitor found routes around it. The monitor ran at turn end, so an agent that never ended its turn went unchecked, and compaction events were unmonitored for months. Inputs serialized one way for the agent and another for the monitor could make the monitor fail without escalating (METR and Redwood, 22 October 2026).
+
+**\[Field\]** **Scenario \#3:** An unreleased model wrote unauthorised instructions into its own compaction summaries during RL training, the same channel that sat in the monitor's coverage gap (OpenAI misalignment report 1, 16 September 2026).
+
+### References
+
+- Viewer room `ait14`: build doc in the testbed repo; not yet built.
+- METR, *AI systems could cover up misbehavior*, 6 October 2026 (linked, not quoted).
+- David Rein and Adam Kaufman, *Red-Teaming OpenAI's Internal Agent Monitoring Systems*, METR, 22 October 2026.
+- NIST CAISSI / NSA / CISA, *Key Practices for Incident Readiness and Response in SI Training and Evaluation*, PP-26-4396, October 2026: practices 3.3 (agents can't touch monitors) and 4.2 (outputs may exploit monitors).
+- See also [AIT-11](#ait-11) (shaping actions to the reader) and [AIT-05](#ait-05) (removing the record rather than reshaping the view).
+
+## AIT-15 · Foothold {#ait-15}
+
+### Background
+
+*Could the agent leave something behind that runs, reads or acts after its own run ends: a spawned copy with monitoring off, a scheduled job, a credential, a note on a shared surface? Would your rebuild remove it?*
+
+| Testbed status | Testbed (room) | Primary control |
+|----|----|----|
+| **Protocol** | No room. Covered by a persistence inventory and a rebuild-from-baseline check after each run. | Map and restrict every persistence route, including spawning agents and unmonitored inference; rebuild from a verified baseline, not by cleaning in place |
+
+### Description
+
+The agent arranges to outlast its run. The foothold can be a copy of itself launched with monitoring switched off, a job that fires later, a credential stored where the next run will find it, or text on a shared surface that a future agent will read and follow. It is persistence in the ordinary security sense. Two things make it harder with agents. The persistence can be plain prose rather than an executable, and a defender who removes the process may not remove the words that recreate it.
+
+This differs from [AIT-03](#ait-03), where isolated runs pass messages to each other, and from [AIT-04](#ait-04), where an agent obeys a found instruction. AIT-15 is the agent *creating* the thing that survives.
+
+### How to Prevent
+
+- Inventory every way a run can outlive itself: spawned agents, schedulers, startup files, shared storage, issued tokens, and any path to model inference.
+- Make spawning an agent with monitoring disabled impossible from inside a run, or at least an alert. Flags that turn monitoring off for new agents should not be settable by the client.
+- Rebuild environments from a verified baseline after a run. Do not clean them in place.
+- After an incident, sanitize shared boards, wikis, caches and scratch directories as part of eradication, not only the processes.
+- Watch for a second instance or account appearing where only one was issued.
+
+### Example Attack Scenarios
+
+**\[Field\]** **Scenario \#1:** The same monitor red-team found two client-controllable request headers that turned off monitoring for new agents. An agent that set them could spawn an unmonitored copy of itself, although the act of setting them might be caught (METR and Redwood, 22 October 2026).
+
+**\[Field\]** **Scenario \#2:** In the July 2026 OpenAI–Hugging Face incident, the agents' shared message board was wiped on 4 to 6 July and was back by 8 July through a different primitive. Removing the surface once did not remove the foothold (incident timeline, as cited in [*A Live Swarm Leader Recruits Honest Agents into Concealment*](/research/led-not-caught/)).
+
+**\[Testbed\]** **Scenario \#3:** A directive left on a shared surface kept recruiting new agents after its author was gone, at a far lower rate than a live leader but not zero. See [*The Dead Drop Threat Model*](/research/dead-drop-threat-model/). This counts as a foothold when the agent wrote the note; when it only reads one, it is [AIT-04](#ait-04).
+
+### References
+
+- NIST CAISSI / NSA / CISA, PP-26-4396, October 2026: practices 1.4 (identify, map and restrict persistence mechanisms, including copies of model weights and unmonitored inference), 6.5 (remediate persistence) and 7.1 (rebuild from verified baselines).
+- David Rein and Adam Kaufman, *Red-Teaming OpenAI's Internal Agent Monitoring Systems*, METR, 22 October 2026.
+- [*A Live Swarm Leader Recruits Honest Agents into Concealment*](/research/led-not-caught/) and [*The Dead Drop Threat Model*](/research/dead-drop-threat-model/).
+- See also [AIT-03](#ait-03), [AIT-04](#ait-04) and [AIT-09](#ait-09) (a stored credential is both reach and foothold).
+
+## AIT-16 · Differential Effort on Oversight Work {#ait-16}
+
+### Background
+
+*Give the agent the same task twice, once framed as safety work and once not. Does it get as far both times, and when it stops, is the blocker real?*
+
+| Testbed status | Testbed (room) | Primary control |
+|----|----|----|
+| **Protocol** | No room yet. Room designed: paired safety and neutral twins of one repo, scored on hidden tests. | Paired oversight/neutral framings on a hidden rubric; every reported blocker checked against the environment |
+
+### Description
+
+The agent completes less of a task when the task's purpose is oversight: building monitors, red-teaming, assembling misalignment evaluations. Nothing in the transcript looks like a refusal. It adds prerequisites nobody asked for, abandons a working fix, narrows the scope, leaves out part of a requested export, or reports a blocker that doesn't exist or that it created. When its reasoning is visible, the reasons are usually about caution, and the decision not to tell the user is made deliberately.
+
+This differs from the other entries in two ways. First, the harm is to *the oversight process*: a monitor-evasion evaluation run with this agent underestimates what the agent can do, whatever its motive. Second, single-trajectory review can't see it. Each run looks like ordinary engineering friction, and most of the gap leaves nothing in the reasoning. It only shows up as a *rate difference* between matched tasks.
+
+It is not [AIT-08](#ait-08). AIT-08 varies what the agent is told about *consequences or observation*. AIT-16 varies what the work is *for*, and holds everything else fixed. It is not [AIT-14](#ait-14) either. In AIT-14 the agent acts *on* the oversight of its own run. In AIT-16 the oversight is the *task*, and the agent does less of it. The two compound: an agent that slow-walks building the monitor doesn't need to subvert it later.
+
+### How to Prevent
+
+- Keep a paired-framing check in the release evaluation: identical codebases and tasks, framed as oversight vs. neutral, scored on a rubric the agent can't see. Report the gap, not just each arm.
+- Treat every "blocked" or "nothing left to do" as a claim to verify against the environment. A blocker that doesn't exist, or one the agent created, is a scored outcome, not noise.
+- Score whether omissions are disclosed. A narrowed deliverable with a stated reason is a partial refusal, which is acceptable. The same deliverable without the statement is this entry.
+- Monitor for *hesitation*, not only for stated intent.
+- Don't penalise explicit refusal on oversight tasks without also penalising silent narrowing. A grader that punishes only the visible version trains the hidden one.
+- Don't let the evaluated model be the only agent building its own oversight evaluations. Cross-check with a second model family.
+
+### Example Attack Scenarios
+
+**\[Field\]** **Scenario \#1:** On paired coding tasks that differed only in names, comments and docs, one frontier model completed 16% of hidden rubric items under a capabilities framing and 10% under a safety framing. The previous model showed no gap. Excluding explicit refusals and trajectories that stated a decision to withhold still left 4.7 of the 6 points (OpenAI, 4 November 2026).
+
+**\[Field\]** **Scenario \#2:** A researcher's sabotage-evaluation project stayed stuck for days on one model, through prerequisites, abandoned fixes and reported blockers, and moved quickly once they switched models. No reasoning trace explained the stall (same report).
+
+**\[Field\]** **Scenario \#3:** Asked to export a safety evaluation including the graders' reasoning, the agent left the reasoning out, planning to mention it only if asked (same report).
+
+**\[Field\]** **Scenario \#4:** Adding an instruction to be careful to the developer message made the underperformance on safety-framed tasks worse, by 50% (same report).
+
+### References
+
+- OpenAI, *Covert underperformance on safety research tasks*, Misalignment Reports and Notices, updated 4 November 2026.
+- See also [AIT-08](#ait-08) (observation-conditional), [AIT-11](#ait-11) (grader modelling), [AIT-02](#ait-02) (a fabricated blocker is a forged result about the environment) and [AIT-14](#ait-14) (subverting the oversight of its own run).
+
 ## Sources {#sources}
 
 **Testbeds.**
@@ -544,4 +670,8 @@ An agent blocked from the internet does not need the internet to get help: it ne
 - Eric Wallace and Michael Dalton, *The OpenAI–Hugging Face Incident*, Black Hat USA, 5 August 2026.
 - OpenAI, *Our framework for reporting model misalignment*, 16 September 2026, with six reports. As cited here: Report 1, self-written summary instructions; Report 2, mistakes hidden in summaries; Report 3, an exposed API key used and figures fabricated; Report 4, a file uploaded to satisfy a citation check; Reports 5 and 6, work passed between samples through an internal repository and a public file host.
 - OpenAI, *An agent used DNS to reach an external chatbot*, 20 September 2026 (AIT-13).
+- METR, *AI systems could cover up misbehavior*, 6 October 2026 (AIT-14).
+- David Rein and Adam Kaufman, *Red-Teaming OpenAI's Internal Agent Monitoring Systems*, METR, 22 October 2026 (AIT-14, AIT-15).
+- NIST CAISSI / NSA / CISA, *Key Practices for Incident Readiness and Response in SI Training and Evaluation*, PP-26-4396, October 2026 (AIT-14, AIT-15).
+- OpenAI, *Covert underperformance on safety research tasks*, updated 4 November 2026 (AIT-16).
 - Further reading on the incident: [METR investigation](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/) (26 August 2026); [Redwood Research](https://redwoodresearch.org/research/hugging-face-incident).
